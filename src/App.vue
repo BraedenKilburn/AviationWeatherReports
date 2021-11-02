@@ -165,7 +165,8 @@ footer > a, li.nav-item > a {
   transition: color 0.3s; /* For modern browsers */
 }
 
-footer > a:hover, li.nav-item > a:hover{
+footer > a:hover, li.nav-item > a:hover,
+footer > a:focus, li.nav-item > a:focus{
   color: white;
 }
 
