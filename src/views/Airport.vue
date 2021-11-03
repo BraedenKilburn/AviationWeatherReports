@@ -11,10 +11,7 @@
                         <div class="text index">
                             <h2>Airport Information</h2>
                             <h3>Aviation Weather Reports</h3>
-                            <form class="d-flex justify-content-center mt-4 mr-4 mainForm" action="">
-                                <input type="search" id="mainICAO" placeholder="Airport ICAO" autocorrect="off">
-                                <button type="submit" class="btn btn-outline-light">Search</button>
-                            </form>
+                              <AirportSearch search-type = "station" v-bind:icao = airport />
                             <div class=" error mt-5 p-3"></div>
                         </div>
                     </div>
@@ -23,6 +20,25 @@
         </div>
     </main>
 </template>
+
+
+<script>
+import AirportSearch from "../components/airportSearch.vue"
+export default {
+  name: 'Airport',
+  components: {
+    AirportSearch,
+  },
+  data() {
+    return {
+	   airport: '',
+    }
+  },
+  methods: {
+
+  },
+}
+</script>
 
 <style scoped>
 

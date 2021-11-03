@@ -28,7 +28,7 @@
       </header>
 
       <router-view />
-      
+
       <footer class=" d-flex flex-wrap justify-content-center align-items-center pt-md-0 fixed-bottom">
         <a href="https://github.com/BraedenKilburn/Airport-Weather-Website" target="_blank"
           rel="noopener noreferrer"
