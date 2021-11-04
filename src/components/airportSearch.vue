@@ -1,9 +1,8 @@
 <template>
-<form v-on:submit.prevent class="d-flex justify-content-center mt-4 mr-4 mainForm" action="">
-    <input v-on="update(icao, searchType)" v-model="icao" type="search" name="airportCode" id="mainICAO" :placeholder=this.$root.$data.currAirport autocorrect="off">
-    <button type="submit" class="btn btn-outline-light">Search</button>
-    <p>I mustache you a question {{this.$root.$data.response}}</p>
-</form>
+<div class="d-flex justify-content-center mt-4 mr-4 mainForm" action="">
+    <input v-model="icao" type="search" name="airportCode" id="mainICAO" :placeholder=this.$root.$data.currAirport autocorrect="off">
+    <button v-on:click="update(icao, searchType)" class="btn btn-outline-light">Search</button>
+</div>
 </template>
 
 <script>
@@ -22,7 +21,13 @@ export default {
     const key = "/?x-api-key=6d49d388dad844158755caf13c";
     const url = "https://api.checkwx.com";
     try {
-      var fullURL = url + "/" + searchType + "/" + icao + key;
+      var fullURL = "";
+      if (searchType == "station") {
+        fullURL = url + "/" + searchType + "/" + icao + key;
+      }
+      else {
+        fullURL = url + "/" + searchType + "/" + icao + "/decoded" + key;
+      }
 
       const res = await axios.get(fullURL);
       const json = res.data;
@@ -35,9 +40,7 @@ export default {
     }
     },
     update(airport, searchType) {
-      if (airport != "") {
       this.$root.$data.currAirport = airport;
-      }
       if (searchType != "home") {
         this.getData(this.$root.$data.currAirport, searchType);
       }

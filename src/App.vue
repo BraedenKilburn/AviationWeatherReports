@@ -18,10 +18,10 @@
                     <router-link to="./metar" class="nav-link">METAR</router-link>
                     <router-link to="./taf" class="nav-link">TAF</router-link>
                 </div>
-                <form class="form-inline navbarForm">
+                <div class="form-inline navbarForm">
                     <input class="form-control mr-sm-2" name="airportCode" autocorrect="off" id="navbarICAO" type="search"
                         placeholder="Airport ICAO" aria-label="Search">
-                </form>
+                </div>
             </div>
           </div>
         </nav>
