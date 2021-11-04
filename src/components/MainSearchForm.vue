@@ -5,7 +5,6 @@
           <h2>{{ header }}</h2>
           <h3>Aviation Weather Reports</h3>
           <AirportSearch />
-          <div class="error mt-5 p-3"></div>
       </div>
     </div>
   </div>
@@ -30,8 +29,3 @@ export default {
   },
 }
 </script>
-
-
-<style scoped>
-
-</style>

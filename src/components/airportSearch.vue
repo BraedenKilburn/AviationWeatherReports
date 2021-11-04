@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     // Set our global airport variable and call the API function
-    update(airport) {
+    async update(airport) {
       this.$root.$data.currAirport = airport;
 
       // TODO: This is a lot of API calls, can I cache the responses so I don't unnecessarily
@@ -29,17 +29,17 @@ export default {
       // Grab and save station info
       let searchType = "station";
       this.buildURL(this.$root.$data.currAirport, searchType);
-      this.fetch(searchType);
+      await this.fetch(searchType);
 
       // Grab and save METAR info
       searchType = "metar";
       this.buildURL(this.$root.$data.currAirport, searchType);
-      this.fetch(searchType);
+      await this.fetch(searchType);
 
       // Grab and save TAF info
       searchType = "taf";
       this.buildURL(this.$root.$data.currAirport, searchType);
-      this.fetch(searchType);
+      await this.fetch(searchType);
     },
 
     // Function to set URL for API call
@@ -71,6 +71,6 @@ export default {
       else if (searchType === "taf")
         this.$root.$data.tafInfo = json.data[0];
     },
-  }
+  },
 }
 </script>

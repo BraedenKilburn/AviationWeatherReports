@@ -4,16 +4,17 @@
             <section class="showcase airport d-flex justify-content-center align-items-top text-center">
                 <video src="/videos/valley.mp4" playsinline muted loop autoplay></video>
                 <div class="overlay"></div>
-                <div class="text">
-                    <!-- Airport Name Heading -->
-                    <div class="row text-center" id="airportName"></div>
-                    <div class="container">
-                        <!-- If there's no Airport Information retrieved yet, provide a form -->
-                        <MainSearchForm v-if="this.$root.$data.stationInfo === null" header="Airport Information" />
-                        <!-- If there is Airport Information saved already, display it instead -->
-                        <h2 v-else> {{ this.$root.$data.stationInfo }} </h2>
-                    </div>
-                </div>
+
+                <!-- If there's no airport information retrieved yet, provide a form -->
+                <MainSearchForm v-if="this.$root.$data.stationInfo === null" header="Airport Information" />
+
+                <!-- If there's no stationInfo, alert the user and give them a new form -->
+                <InvalidRequest v-else-if="this.$root.$data.stationInfo === undefined" header="Invalid Airport" from="METAR Report" />
+
+                <!-- If there is a station report saved already, display it instead -->
+                <p v-else>Put a AirportReport component here with a v-else tag</p>
+
+                <Footer />
             </section>
         </div>
     </main>
@@ -22,11 +23,15 @@
 
 <script>
 import MainSearchForm from "../components/MainSearchForm.vue"
+import InvalidRequest from "../components/InvalidRequest.vue"
+import Footer from "../components/Footer.vue"
 
 export default {
   name: 'Airport',
   components: {
     MainSearchForm,
+    InvalidRequest,
+    Footer,
   },
   data() {
     return {
@@ -39,8 +44,24 @@ export default {
 
 <style scoped>
 
+.text.metar {
+    position: relative;
+    z-index: 10;
+    padding-top: 6vh;
+}
+
 .showcase.airport {
     padding: 0%;
 }
 
+/* Mobile Styles */
+
+@media only screen and (max-width: 429px) {
+  .showcase {
+    flex-direction: column;
+  }
+  footer {
+      margin-top: 20px;
+  }
+}
 </style>

@@ -16,26 +16,35 @@
             <div class="row d-flex align-items-center location-metar">
                 <div class="col-md-4 col-sm-12 mb-3" id="wind">
                 <img height="70px" src="/images/wind.svg" alt="Wind">
-                <h3 class="m-0 p-0"> {{ wind }} </h3>
+                <h3 class="m-0 p-0">Wind:</h3>
+                <h3> {{ wind }} </h3>
                 </div>
 
                 <Clouds />
 
                 <div class="col-md-4 col-sm-12 mb-3" id="temperature">
-                <!-- Temperature -->
+                <img height="70px" src="/images/temperature.svg" alt="Temperature">
+                <h3 class="m-0 p-0">Temperature</h3>
+                <h3> {{ temperature }}</h3>
                 </div>
             </div>
             <div class="row d-flex align-items-center location-metar">
                 <div class="col-md-4 col-sm-12 mb-3" id="visibility">
-                <!-- Visibility -->
+                    <img height="70px" src="/images/visibility.svg" alt="Visibility">
+                    <h3 class="m-0 p-0">Visibility:</h3>
+                    <h3> {{ visibility }} </h3>
                 </div>
 
                 <div class="col-md-4 col-sm-12 mb-3" id="barometer">
-                <!-- Barometer/Altimeter -->
+                    <img height="70px" src="/images/barometer.svg" alt="Altimeter">
+                    <h3 class="m-0 p-0">Altimeter</h3>
+                    <h3> {{ barometer }} </h3>
                 </div>
 
                 <div class="col-md-4 col-sm-12 mb-3" id="dewpoint">
-                <!-- Dewpoint -->
+                <img height="70px" src="/images/dewpoint.svg" alt="Dewpoint">
+                <h3 class="mb-2 p-0">Dewpoint</h3>
+                <h3> {{ dewpoint }} </h3>
                 </div>
             </div>
         </div>
@@ -49,8 +58,8 @@ export default {
     name: "MetarReport",
     data() {
         return {
-            airport: this.$root.$data.stationInfo,
             metar: this.$root.$data.metarInfo,
+            airport: this.$root.$data.stationInfo,
         };
     },
     components: {
@@ -82,13 +91,31 @@ export default {
                 let windDirection = this.metar.wind.degrees;
                 let windSpeed = this.metar.wind.speed_kts;
 
-                return "Wind: " +  windDirection + "° at " + windSpeed + "kts";
+                return windDirection + "° at " + windSpeed + "kts";
             }
             else
             {
-                return "Wind: 0° at 0kts";
+                return "0° at 0kts";
             }
         },
+        temperature: function() {
+            let tempC = this.metar.temperature.celsius;
+            let tempF = this.metar.temperature.fahrenheit;
+
+            return tempF + "°F / " + tempC + "°C";
+        },
+        visibility: function() {
+            return this.metar.visibility.miles + " miles";
+        },
+        barometer: function () {
+            return this.metar.barometer.hg.toFixed(2) + " inHg";
+        },
+        dewpoint: function () {
+            let dewpointC = this.metar.dewpoint.celsius;
+            let dewpointF = this.metar.dewpoint.fahrenheit;
+
+            return dewpointF + "°F / " + dewpointC + "°C";
+        }
     },
     methods: {
     },
@@ -108,8 +135,8 @@ export default {
     font-weight: 700;
     background-color: rgba(255, 255, 255, 0.7);
     border-radius: 25px;
-    padding-left: 19px;
-    padding-right: 19px;
+    padding-left: 40px;
+    padding-right: 40px;
     width: auto;
 }
 
@@ -127,5 +154,13 @@ export default {
 
 .lifr {
     color: magenta;
+}
+
+.container.metar {
+  min-width: 100%;
+}
+
+.location-metar {
+    min-height: 30vh;
 }
 </style>

@@ -28,23 +28,6 @@
       </header>
 
       <router-view />
-
-      <footer class=" d-flex flex-wrap justify-content-center align-items-center pt-md-0 fixed-bottom">
-        <a href="https://github.com/BraedenKilburn/Airport-Weather-Website" target="_blank"
-          rel="noopener noreferrer"
-          class="col-md-6 d-flex align-items-center mb-sm-3 mb-md-0 text-decoration-none">
-          <i class="fab fa-github"></i>
-          <p class="pl-5 mb-0">Created by Braeden Kilburn</p>
-        </a>
-        <ul class="nav col-md-6 justify-content-end">
-          <li class="nav-item"><router-link to="/" class="nav-link px-2">Home</router-link>
-          </li>
-          <li class="nav-item"><router-link to="./airport" class="nav-link px-2">Airports</router-link>
-          </li>
-          <li class="nav-item"><router-link to="./metar" class="nav-link px-2">METAR</router-link></li>
-          <li class="nav-item"><router-link to="./taf" class="nav-link px-2">TAF</router-link></li>
-        </ul>
-      </footer>
     </div>
   </div>
 </template>
@@ -153,6 +136,9 @@ footer {
     width: 100%;
     padding-left: var(--bs-gutter-x, .75rem);
     padding-right: var(--bs-gutter-x, .75rem);
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
 }
 
 footer p {
@@ -173,5 +159,83 @@ footer > a:focus, li.nav-item > a:focus{
 .fa-github {
   color: white;
   margin: 0px 5px;
+}
+
+/* Mobile Styles */
+
+@media only screen and (max-width: 429px) {
+  .navbar {
+        position: relative;
+        --bs-bg-opacity: 1;
+        background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity))!important;
+    }
+    .navbar-brand {
+        margin-right: 0;
+    }
+    footer {
+        position: relative;
+        justify-content: center !important;
+    }
+    .text.metar {
+        padding: 10px 10px 0px 10px;
+    }
+    .text.index h2, h3 {
+        padding: 10px 0;
+    }
+    .text.index h2 {
+        font-size: 3em;
+    }
+    .text.index h3 {
+        font-size: 2em;
+    }
+    .taf h4 {
+        font-size: 1.3em;
+    }
+    .taf h4:last-of-type {
+        font-size: 1.25em;
+    }
+}
+
+/* Tablet Styles */
+
+@media only screen and (min-width: 430px) and (max-width: 960px) {
+  .navbar {
+        position: relative;
+        --bs-bg-opacity: 1;
+        background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity))!important;
+    }
+    .text.index {
+        padding-top: 100px;
+    }
+    .text.index h2, h3 {
+        padding: 10px 0;
+    }
+    .text.metar {
+        padding-top: 0;
+    }
+    .showcase {
+        padding: 0px;
+        min-height: 94vh;
+    }
+}
+
+/* Larger Tables or Smaller Laptops */
+
+@media only screen and (min-width: 961px) and (max-width: 1260px) {
+  .text {
+        padding-top: 4vh;
+    }
+    .text.index {
+        padding-top: 200px;
+    }
+    .text.index h2, h3 {
+        padding: 10px 0;
+    }
+    .showcase {
+        padding: 40px;
+    }
+    .location {
+        min-height: 26vh;
+    }
 }
 </style>
