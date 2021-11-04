@@ -15,14 +15,10 @@
                         <!-- Flight Category (VFR, MVFR, IFR, LIFR) -->
                     </div>
                     <div class="container metar mt-4 mt-lg-0">
-                        <div class="text index mt-0 mt-lg-3">
-                            <h2>METAR Report</h2>
-                            <h3>Aviation Weather Reports</h3>
-
-                            <AirportSearch />
-
-                            <div class="error mt-5 p-3"></div>
-                        </div>
+                        <!-- If there's no METAR report retrieved yet, provide a form -->
+                        <MainSearchForm v-if="this.$root.$data.metarInfo === null" header="METAR Report" />
+                        <!-- If there is a METAR report saved already, display it instead -->
+                        <h2 v-else> {{ this.$root.$data.metarInfo }} </h2>
                     </div>
                 </div>
             </section>
@@ -32,12 +28,12 @@
 </template>
 
 <script>
-import AirportSearch from "../components/airportSearch.vue"
+import MainSearchForm from "../components/MainSearchForm.vue"
 
 export default {
   name: 'METAR',
   components: {
-    AirportSearch,
+    MainSearchForm,
   },
   data() {
     return {

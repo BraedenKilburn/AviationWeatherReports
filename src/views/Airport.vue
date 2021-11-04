@@ -8,14 +8,10 @@
                     <!-- Airport Name Heading -->
                     <div class="row text-center" id="airportName"></div>
                     <div class="container">
-                        <div class="text index mt-0 mt-lg-3">
-                            <h2>Airport Information</h2>
-                            <h3>Aviation Weather Reports</h3>
-
-                            <AirportSearch />
-
-                            <div class="error mt-5 p-3"></div>
-                        </div>
+                        <!-- If there's no Airport Information retrieved yet, provide a form -->
+                        <MainSearchForm v-if="this.$root.$data.stationInfo === null" header="Airport Information" />
+                        <!-- If there is Airport Information saved already, display it instead -->
+                        <h2 v-else> {{ this.$root.$data.stationInfo }} </h2>
                     </div>
                 </div>
             </section>
@@ -25,21 +21,18 @@
 
 
 <script>
-import AirportSearch from "../components/airportSearch.vue"
+import MainSearchForm from "../components/MainSearchForm.vue"
 
 export default {
   name: 'Airport',
   components: {
-    AirportSearch,
+    MainSearchForm,
   },
   data() {
     return {
     }
   },
   methods: {
-      // Check if stationInfo != null
-      // If null, serve AirportSearch component
-      // Else, display airport info from stationInfo object
   },
 }
 </script>

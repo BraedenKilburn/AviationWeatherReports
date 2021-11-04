@@ -15,14 +15,10 @@
                         <!-- To Header -->
                     </div>
                     <div class="container metar taf mt-4 mt-lg-0" id="tafTable">
-                        <div class="text index mt-0 mt-lg-3">
-                            <h2>TAF Forecast</h2>
-                            <h3>Aviation Weather Reports</h3>
-
-                            <AirportSearch />
-
-                            <div class="error mt-5 p-3"></div>
-                        </div>
+                        <!-- If there's no TAF Forecast retrieved yet, provide a form -->
+                        <MainSearchForm v-if="this.$root.$data.tafInfo === null" header="TAF Forecast" />
+                        <!-- If there is a TAF forecast saved already, display it instead -->
+                        <h2 v-else> {{ this.$root.$data.tafInfo }} </h2>
                     </div>
                 </div>
             </section>
@@ -32,21 +28,18 @@
 </template>
 
 <script>
-import AirportSearch from "../components/airportSearch.vue"
+import MainSearchForm from "../components/MainSearchForm.vue"
 
 export default {
   name: 'TAF',
   components: {
-    AirportSearch,
+    MainSearchForm,
   },
   data() {
     return {
     }
   },
   methods: {
-    // Check if tafInfo != null
-    // If null, serve AirportSearch component
-    // Else, display airport info from tafInfo object
   },
 }
 </script>
