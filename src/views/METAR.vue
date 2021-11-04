@@ -15,7 +15,7 @@
                         <!-- Flight Category (VFR, MVFR, IFR, LIFR) -->
                     </div>
                     <div class="container metar mt-4 mt-lg-0">
-                        <div class="text index">
+                        <div class="text index mt-0 mt-lg-3">
                             <h2>METAR Report</h2>
                             <h3>Aviation Weather Reports</h3>
 

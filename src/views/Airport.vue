@@ -8,7 +8,7 @@
                     <!-- Airport Name Heading -->
                     <div class="row text-center" id="airportName"></div>
                     <div class="container">
-                        <div class="text index">
+                        <div class="text index mt-0 mt-lg-3">
                             <h2>Airport Information</h2>
                             <h3>Aviation Weather Reports</h3>
 
