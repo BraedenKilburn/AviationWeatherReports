@@ -9,7 +9,9 @@ new Vue({
   router,
   data: {
     currAirport: "",
-    response: 0,
+    airportInfo: null,
+    metarInfo: null,
+    tafInfo: null,
   },
   render: (h) => h(App),
 }).$mount("#app");

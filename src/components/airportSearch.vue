@@ -1,51 +1,75 @@
 <template>
-<div class="d-flex justify-content-center mt-4 mr-4 mainForm" action="">
-    <input v-model="icao" type="search" name="airportCode" id="mainICAO" :placeholder=this.$root.$data.currAirport autocorrect="off">
-    <button v-on:click="update(icao, searchType)" class="btn btn-outline-light">Search</button>
-</div>
+<form v-on:submit.prevent class="d-flex justify-content-center mt-4 mr-4 mainForm" action="">
+    <input v-model="icao" type="search" name="airportCode" id="mainICAO" placeholder="Airport ICAO" autocorrect="off">
+    <button v-on:click="update(icao)" type="submit" class="btn btn-outline-light">Search</button>
+</form>
 </template>
 
 <script>
 </script>
 
-
 <script>
+const axios = require("axios");
+
 export default {
   name: 'AirportSearch',
-  props: {
-    icao: 'value',
-    searchType: String,
-    },
+  data() {
+    return {
+      icao: "",
+      url: "",
+    }
+  },
   methods: {
-    async getData(icao,searchType) {
-    const key = "/?x-api-key=6d49d388dad844158755caf13c";
-    const url = "https://api.checkwx.com";
-    try {
-      var fullURL = "";
-      if (searchType == "station") {
-        fullURL = url + "/" + searchType + "/" + icao + key;
+    // Set our global airport variable and call the API function
+    update(airport) {
+      this.$root.$data.currAirport = airport;
+
+      let searchType = "station";
+
+      // Grab and save station info
+      this.buildURL(this.$root.$data.currAirport, searchType);
+      this.fetch(searchType);
+
+      // Grab and save METAR info
+      searchType = "metar";
+      this.buildURL(this.$root.$data.currAirport, searchType);
+      this.fetch(searchType);
+
+      // Grab and save TAF info
+      searchType = "taf";
+      this.buildURL(this.$root.$data.currAirport, searchType);
+      this.fetch(searchType);
+    },
+
+    // Function to set URL for API call
+    buildURL(icao, searchType) {
+      const key = "/?x-api-key=6d49d388dad844158755caf13c";
+      const url = "https://api.checkwx.com";
+
+      if (searchType === "station") {
+        this.url = url + "/" + searchType + "/" + icao + key;
       }
       else {
-        fullURL = url + "/" + searchType + "/" + icao + "/decoded" + key;
+        this.url = url + "/" + searchType + "/" + icao + "/decoded" + key;
       }
+    },
 
-      const res = await axios.get(fullURL);
+    // Fetches and stores API data in data
+    async fetch(searchType) {
+      // Fetch
+      const res = await axios.get(this.url);
       const json = res.data;
 
-      // Throw error for an empty object
-      if (json.results === 0) throw "Invalid Airport";
-      return json.data[0];
-    } catch (e) {
-      console.log("Error:", e);
-    }
+      // Store Station info
+      if (searchType === "station")
+        this.$root.$data.stationInfo = json.data[0];
+      // Store METAR info
+      else if (searchType === "metar")
+        this.$root.$data.metarInfo = json.data[0];
+      // Store TAF info
+      else if (searchType === "taf")
+        this.$root.$data.tafInfo = json.data[0];
     },
-    update(airport, searchType) {
-      this.$root.$data.currAirport = airport;
-      if (searchType != "home") {
-        this.getData(this.$root.$data.currAirport, searchType);
-      }
-    },
-
   }
 }
 </script>
