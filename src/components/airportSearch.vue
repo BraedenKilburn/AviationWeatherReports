@@ -24,9 +24,13 @@ export default {
     update(airport) {
       this.$root.$data.currAirport = airport;
 
-      let searchType = "station";
+      // TODO: This is a lot of API calls, can I cache the responses so I don't unnecessarily
+      // make a request for the same airport within the valid time (when nothing would have changed)?
+      // METAR and TAF requests could be requested and cached for at least 15 minutes
+      // Station requests could be cached for at least 24 hours
 
       // Grab and save station info
+      let searchType = "station";
       this.buildURL(this.$root.$data.currAirport, searchType);
       this.fetch(searchType);
 

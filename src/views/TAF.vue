@@ -44,6 +44,9 @@ export default {
     }
   },
   methods: {
+    // Check if tafInfo != null
+    // If null, serve AirportSearch component
+    // Else, display airport info from tafInfo object
   },
 }
 </script>

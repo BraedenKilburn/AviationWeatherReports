@@ -44,6 +44,9 @@ export default {
     }
   },
   methods: {
+      // Check if metarInfo != null
+      // If null, serve AirportSearch component
+      // Else, display airport info from metarInfo object
   },
 }
 </script>

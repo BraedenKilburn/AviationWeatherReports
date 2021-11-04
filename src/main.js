@@ -9,7 +9,7 @@ new Vue({
   router,
   data: {
     currAirport: "",
-    airportInfo: null,
+    stationInfo: null,
     metarInfo: null,
     tafInfo: null,
   },
