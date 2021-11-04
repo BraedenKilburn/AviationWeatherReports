@@ -18,8 +18,10 @@
                         <div class="text index">
                             <h2>TAF Forecast</h2>
                             <h3>Aviation Weather Reports</h3>
-                              <AirportSearch search-type = "taf" v-bind:icao = airport />
-                            <div class=" error mt-5 p-3"></div>
+
+                            <AirportSearch />
+
+                            <div class="error mt-5 p-3"></div>
                         </div>
                     </div>
                 </div>
@@ -31,6 +33,7 @@
 
 <script>
 import AirportSearch from "../components/airportSearch.vue"
+
 export default {
   name: 'TAF',
   components: {
@@ -38,11 +41,9 @@ export default {
   },
   data() {
     return {
-	   airport: '',
     }
   },
   methods: {
-
   },
 }
 </script>

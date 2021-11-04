@@ -8,9 +8,9 @@
             <h2>Aviation Weather Reports</h2>
             <h3>Keep your head out of the clouds</h3>
 
-            <AirportSearch search-type = "home" />
-            
-            <div class=" error mt-5 p-3"></div>
+            <AirportSearch />
+
+            <div class="error mt-5 p-3"></div>
           </div>
         </section>
       </div>
@@ -31,7 +31,6 @@ export default {
     }
   },
   methods: {
-
   },
 }
 </script>
