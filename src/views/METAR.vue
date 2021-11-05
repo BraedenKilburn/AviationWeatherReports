@@ -13,7 +13,7 @@
                 <InvalidRequest v-else-if="this.$root.$data.metarInfo === undefined" header="METAR not available" from="METAR Report" />
 
                 <!-- If there is a METAR report saved already, display it instead -->
-                <MetarReport v-else />
+                <MetarReport v-else :airport="this.$root.$data.stationInfo" :metar="this.$root.$data.metarInfo" />
 
                 <Footer />
             </section>
@@ -34,13 +34,6 @@ export default {
     MetarReport,
     InvalidRequest,
     Footer,
-  },
-  data() {
-    return {
-
-    }
-  },
-  methods: {
   },
 }
 </script>

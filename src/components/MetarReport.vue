@@ -56,11 +56,9 @@ import Clouds from "../components/CloudReport.vue"
 
 export default {
     name: "MetarReport",
-    data() {
-        return {
-            metar: this.$root.$data.metarInfo,
-            airport: this.$root.$data.stationInfo,
-        };
+    props: {
+        airport: Object,
+        metar: Object,
     },
     components: {
         Clouds,
@@ -116,8 +114,6 @@ export default {
 
             return dewpointF + "°F / " + dewpointC + "°C";
         }
-    },
-    methods: {
     },
     mounted() {
         // Do this after the page has been loaded

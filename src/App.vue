@@ -18,10 +18,7 @@
                     <router-link to="./metar" class="nav-link">METAR</router-link>
                     <router-link to="./taf" class="nav-link">TAF</router-link>
                 </div>
-                <div class="form-inline navbarForm">
-                    <input class="form-control mr-sm-2" name="airportCode" autocorrect="off" id="navbarICAO" type="search"
-                        placeholder="Airport ICAO" aria-label="Search">
-                </div>
+                <NavbarSearch />
             </div>
           </div>
         </nav>
@@ -31,6 +28,16 @@
     </div>
   </div>
 </template>
+
+<script>
+import NavbarSearch from "./components/NavbarSearch.vue"
+
+export default {
+    components: {
+        NavbarSearch,
+    },
+}
+</script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,500;0,600;0,700;0,800;1,300&display=swap');
