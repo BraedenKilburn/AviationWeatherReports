@@ -1,19 +1,19 @@
 <template>
-<form @submit.prevent class="d-flex justify-content-center mt-4 mr-4 mainForm" action="">
-    <input v-model="icao" type="search" name="airportCode" id="mainICAO" placeholder="Airport ICAO" autocorrect="off">
-    <button @click="update(icao)" type="submit" class="btn btn-outline-light">Search</button>
-</form>
+    <form @submit.prevent="update(icao)" class="form-inline navbarForm">
+        <input v-model="icao" class="form-control mr-sm-2" name="airportCode" autocorrect="off" id="navbarICAO" type="search"
+            placeholder="Airport ICAO" aria-label="Search">
+    </form>
 </template>
 
 <script>
 const axios = require("axios");
 
 export default {
-  name: 'AirportSearch',
+  name: 'NavbarSearch',
   data() {
     return {
-      icao: "",
-      url: "",
+        icao: "",
+        url: "",
     }
   },
   methods: {
