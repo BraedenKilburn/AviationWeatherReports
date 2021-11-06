@@ -1,8 +1,12 @@
 <template>
+<div>
 <form @submit.prevent class="d-flex justify-content-center mt-4 mr-4 mainForm" action="">
     <input v-model="icao" type="search" name="airportCode" id="mainICAO" placeholder="Airport ICAO" autocorrect="off">
     <button @click="update(icao)" type="submit" class="btn btn-outline-light">Search</button>
 </form>
+<br/>
+<p>{{message}}</p>
+</div>
 </template>
 
 <script>
@@ -14,6 +18,7 @@ export default {
     return {
       icao: "",
       url: "",
+      message: "",
     }
   },
   methods: {
@@ -68,8 +73,17 @@ export default {
       else if (searchType === "metar")
         this.$root.$data.metarInfo = json.data[0];
       // Store TAF info
-      else if (searchType === "taf")
+      else if (searchType === "taf") {
         this.$root.$data.tafInfo = json.data[0];
+        if (res.data.data.length === 0) {
+          this.$root.$data.tafInfo = "invalid";
+        }
+        else {
+          if (window.location.pathname == '/') {
+            this.$router.push("/airport")
+          }
+        }
+      }
     },
   },
 }

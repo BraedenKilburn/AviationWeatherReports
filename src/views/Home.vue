@@ -8,9 +8,13 @@
             <h2>Aviation Weather Reports</h2>
             <h3>Keep your head out of the clouds</h3>
 
-            <AirportSearch />
-
-            <div class="error mt-5 p-3"></div>
+            <AirportSearch/>
+            <div class="error mt-5 p-3" v-if="this.$root.$data.tafInfo === 'invalid'">
+              <div>
+                <h4>Invalid Airport</h4>
+                <h5>Try again using the ICAO standard naming convention</h5>
+              </div>
+            </div>
           </div>
         </section>
       </div>
@@ -26,15 +30,19 @@ export default {
   components: {
     AirportSearch,
   },
-  data() {
-    return {
-    }
-  },
   methods: {
   },
 }
 </script>
 
 <style scoped>
+.error {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 25px;
+    position: relative;
+}
 
+h4 {
+    text-decoration: underline;
+}
 </style>
