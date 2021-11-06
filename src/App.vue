@@ -41,6 +41,19 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,500;0,600;0,700;0,800;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,500;0,600;0,700;0,800;1,300&display=swap');
+:root {
+    --magnolia: #eae4e9ff;
+    --linen: #fff1e6ff;
+    --pale-pink: #fde2e4ff;
+    --mimi-pink: #fad2e1ff;
+    --mint-cream: #e2ece9ff;
+    --powder-blue: #bee1e6ff;
+    --isabelline: #f0efebff;
+    --lavender-web: #dfe7fdff;
+    --periwinkle-crayola: #cddafdff;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -48,9 +61,11 @@ export default {
     font-family: 'Poppins', sans-serif;
 }
 
+/* General Styling */
+
 body {
-  background-color: black;
-  color: white;
+    background-color: black;
+    color: white;
 }
 
 .row {
@@ -62,20 +77,16 @@ body {
     width: 100%;
 }
 
-input {
-    margin-right: 10px;
+.time-period h4 {
+    margin-bottom: 0;
     border-radius: 25px;
-    text-align: center;
+    background-color: rgba(255, 255, 255, 0.4);
+    color: black;
+    padding-top: 5px;
 }
 
-.navbar #navbarICAO {
-    border-radius: 25px;
-    text-align: center;
-    font-size: 12px;
-}
-
-#navbarICAO:focus {
-    outline: none;
+.container.metar {
+    min-width: 100% !important;
 }
 
 .showcase {
@@ -87,14 +98,17 @@ input {
     z-index: 2;
 }
 
-.showcase video {
+.showcase.airport {
+    padding: 0%;
+}
+
+.showcase header {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.8;
+    padding: 40px 100px;
+    z-index: 10000;
 }
 
 .overlay {
@@ -104,6 +118,24 @@ input {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
+}
+
+.overlay.taf {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.navbar-toggler {
+    position: relative;
+}
+
+.showcase video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
 }
 
 .text {
@@ -130,8 +162,24 @@ input {
     text-transform: uppercase;
 }
 
-.btn {
+.text.metar {
+    width: 100% !important;
+}
+
+input {
+    margin-right: 10px;
     border-radius: 25px;
+    text-align: center;
+}
+
+.navbar #navbarICAO {
+    border-radius: 25px;
+    text-align: center;
+    font-size: 12px;
+}
+
+#navbarICAO:focus {
+    outline: none;
 }
 
 [type="search"]::-webkit-search-cancel-button, [type="search"]::-webkit-search-decoration {
@@ -139,39 +187,69 @@ input {
     appearance: none;
 }
 
+.btn {
+    border-radius: 25px;
+}
+
+.location {
+    min-height: 40vh;
+}
+
+.location-metar {
+    min-height: 30vh;
+}
+
+.vfr, span.vfr {
+    font-weight: 700;
+    color: green;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 25px;
+}
+
+.mvfr, span.mvfr {
+    font-weight: 700;
+    color: blue;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 25px;
+}
+
+.ifr, span.ifr {
+    font-weight: 700;
+    color: red;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 25px;
+}
+
+.lifr, span.lifr {
+    font-weight: 700;
+    color: magenta;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 25px;
+}
+
 footer {
-    width: 100%;
-    padding-left: var(--bs-gutter-x, .75rem);
-    padding-right: var(--bs-gutter-x, .75rem);
     position: absolute;
     bottom: 0;
-    z-index: 1;
+    width: 100%;
+    z-index: 1000;
+    justify-content: space-between;
+    padding-left: var(--bs-gutter-x, .75rem);
+    padding-right: var(--bs-gutter-x, .75rem);
+    padding-top: 10px;
 }
 
 footer p {
     padding-left: 10px;
 }
 
-footer > a, li.nav-item > a {
-  color: #6c757d;
-  -webkit-transition: color 0.3s; /* For Safari 3.0 to 6.0 */
-  transition: color 0.3s; /* For modern browsers */
-}
-
-footer > a:hover, li.nav-item > a:hover,
-footer > a:focus, li.nav-item > a:focus{
-  color: white;
-}
-
-.fa-github {
-  color: white;
-  margin: 0px 5px;
+footer ul li .text-muted:hover, footer a p:hover {
+    color: white !important;
 }
 
 /* Mobile Styles */
 
 @media only screen and (max-width: 429px) {
-  .navbar {
+    .navbar {
         position: relative;
         --bs-bg-opacity: 1;
         background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity))!important;
@@ -179,12 +257,18 @@ footer > a:focus, li.nav-item > a:focus{
     .navbar-brand {
         margin-right: 0;
     }
+    .showcase {
+        padding: 20px;
+    }
+    .showcase.airport {
+        flex-direction: column;
+    }
     footer {
         position: relative;
         justify-content: center !important;
     }
-    .text.metar {
-        padding: 10px 10px 0px 10px;
+    .text {
+        padding-top: 10px;
     }
     .text.index h2, h3 {
         padding: 10px 0;
@@ -206,7 +290,7 @@ footer > a:focus, li.nav-item > a:focus{
 /* Tablet Styles */
 
 @media only screen and (min-width: 430px) and (max-width: 960px) {
-  .navbar {
+    .navbar {
         position: relative;
         --bs-bg-opacity: 1;
         background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity))!important;
@@ -229,7 +313,7 @@ footer > a:focus, li.nav-item > a:focus{
 /* Larger Tables or Smaller Laptops */
 
 @media only screen and (min-width: 961px) and (max-width: 1260px) {
-  .text {
+    .text {
         padding-top: 4vh;
     }
     .text.index {

@@ -74,12 +74,12 @@ export default {
         },
         airportLocation: function() {
           let airportState = "";
-          if (this.airport.hasOwnProperty("state")) {
+          if (this.airport.state != null) {
             airportState = this.airport.state.code;
           }
           let airportCity = this.airport.city;
 
-          if (airportCity === undefined && this.airport.hasOwnProperty("state")) {
+          if (airportCity === undefined && this.airport.state != null) {
             return this.airport.state.name + ",";
           }
           else {
@@ -97,10 +97,10 @@ export default {
         },
         airportElevation: function() {
           return this.airport.elevation.feet;
-        }
+        },
         airportStatus: function() {
           return this.airport.status;
-        }
+        },
     },
     methods: {
     },
