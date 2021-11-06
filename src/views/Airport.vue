@@ -12,7 +12,7 @@
                 <InvalidRequest v-else-if="this.$root.$data.stationInfo === undefined" header="Invalid Airport" from="METAR Report" />
 
                 <!-- If there is a station report saved already, display it instead -->
-                <p v-else>Put a AirportReport component here with a v-else tag</p>
+                <AirportReport v-else/>
 
                 <Footer />
             </section>
@@ -25,12 +25,14 @@
 import MainSearchForm from "../components/MainSearchForm.vue"
 import InvalidRequest from "../components/InvalidRequest.vue"
 import Footer from "../components/Footer.vue"
+import AirportReport from "../components/AirportReport.vue"
 
 export default {
   name: 'Airport',
   components: {
     MainSearchForm,
     InvalidRequest,
+    AirportReport,
     Footer,
   },
   data() {

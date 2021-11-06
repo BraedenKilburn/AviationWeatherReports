@@ -18,7 +18,7 @@
                         <!-- If there's no TAF Forecast retrieved yet, provide a form -->
                         <MainSearchForm v-if="this.$root.$data.tafInfo === null" header="TAF Forecast" />
                         <!-- If there is a TAF forecast saved already, display it instead -->
-                        <h2 v-else> {{ this.$root.$data.tafInfo }} </h2>
+                        <TafReport v-else/>
                     </div>
                 </div>
             </section>
@@ -29,11 +29,13 @@
 
 <script>
 import MainSearchForm from "../components/MainSearchForm.vue"
+import TafReport from "../components/TafReport.vue"
 
 export default {
   name: 'TAF',
   components: {
     MainSearchForm,
+    TafReport,
   },
   data() {
     return {
