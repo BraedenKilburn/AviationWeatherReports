@@ -227,25 +227,6 @@ input {
     border-radius: 25px;
 }
 
-footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    z-index: 1000;
-    justify-content: space-between;
-    padding-left: var(--bs-gutter-x, .75rem);
-    padding-right: var(--bs-gutter-x, .75rem);
-    padding-top: 10px;
-}
-
-footer p {
-    padding-left: 10px;
-}
-
-footer ul li .text-muted:hover, footer a p:hover {
-    color: white !important;
-}
-
 /* Mobile Styles */
 
 @media only screen and (max-width: 429px) {

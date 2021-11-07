@@ -21,6 +21,7 @@
                         <TafReport v-else/>
                     </div>
                 </div>
+                <Footer />
             </section>
         </div>
     </main>
@@ -30,12 +31,14 @@
 <script>
 import MainSearchForm from "../components/MainSearchForm.vue"
 import TafReport from "../components/TafReport.vue"
+import Footer from "../components/Footer.vue"
 
 export default {
   name: 'TAF',
   components: {
     MainSearchForm,
     TafReport,
+    Footer,
   },
   data() {
     return {

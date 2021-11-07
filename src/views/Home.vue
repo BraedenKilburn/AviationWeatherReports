@@ -16,6 +16,8 @@
               </div>
             </div>
           </div>
+
+          <Footer />
         </section>
       </div>
     </main>
@@ -24,11 +26,13 @@
 
 <script>
 import AirportSearch from "../components/airportSearch.vue"
+import Footer from "../components/Footer.vue"
 
 export default {
   name: 'Home',
   components: {
     AirportSearch,
+    Footer,
   },
   methods: {
   },
