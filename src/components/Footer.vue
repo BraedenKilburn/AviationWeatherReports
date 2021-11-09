@@ -4,7 +4,7 @@
           rel="noopener noreferrer"
           class="col-md-6 d-flex align-items-center mb-sm-3 mb-md-0 text-decoration-none">
           <i class="fab fa-github text-muted"></i>
-          <p class="pl-5 mb-0 text-muted">Created by Braeden Kilburn & Milvia Goulding</p>
+          <p class="pl-5 mb-0 text-muted">Created by Braeden Kilburn</p>
         </a>
         <ul class="nav col-md-6 justify-content-end">
           <li class="nav-item"><router-link to="/" class="nav-link px-2 text-muted">Home</router-link>
