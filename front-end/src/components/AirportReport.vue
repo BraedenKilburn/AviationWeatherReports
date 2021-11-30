@@ -56,96 +56,49 @@
 <script>
 
 export default {
-    name: "MetarReport",
-    data() {
-        return {
-            metar: this.$root.$data.metarInfo,
-            airport: this.$root.$data.stationInfo,
-        };
-    },
-    components: {
-      //  Clouds,
-    },
+    name: "AirportReport",
     computed: {
         airportName: function() {
-            let airportICAO = this.metar.icao;
-            let name = this.metar.station.name;
-            return airportICAO + ' - ' + name;
+          let airport = this.$root.$data.stationInfo;
+          let airportICAO = airport.icao;
+          let name = airport.name;
+          return airportICAO + ' - ' + name;
         },
         airportLocation: function() {
+          let airport = this.$root.$data.stationInfo;
           let airportState = "";
-          if (this.airport.state != null) {
-            airportState = this.airport.state.code;
+          if (airport.state != null) {
+            airportState = airport.state.code;
           }
-          let airportCity = this.airport.city;
+          let airportCity = airport.city;
 
-          if (airportCity === undefined && this.airport.state != null) {
-            return this.airport.state.name + ",";
+          if (airportCity === undefined && airport.state != null) {
+            return airport.state.name + ",";
           }
           else {
             return airportCity + ", " + airportState;
           }
         },
         airportCountry: function() {
-          return this.airport.country.name;
+          let airport = this.$root.$data.stationInfo;
+          return airport.country.name;
         },
         airportLatitude: function() {
-          return this.airport.latitude.degrees
+          let airport = this.$root.$data.stationInfo;
+          return airport.latitude.degrees
         },
         airportLongitude: function() {
-          return this.airport.longitude.degrees
+          let airport = this.$root.$data.stationInfo;
+          return airport.longitude.degrees
         },
         airportElevation: function() {
-          return this.airport.elevation.feet;
+          let airport = this.$root.$data.stationInfo;
+          return airport.elevation.feet.toLocaleString();
         },
         airportStatus: function() {
-          return this.airport.status;
+          let airport = this.$root.$data.stationInfo;
+          return airport.status;
         },
-    },
-    methods: {
-    },
-    mounted() {
-        // Do this after the page has been loaded
-        this.$nextTick(function () {
-            // Update class depending on flight category (necessary for styling)
-            let flightCategory = this.$root.$data.metarInfo.flight_category.toLowerCase();
-            document.querySelector("#flightCategory").classList.add(flightCategory);
-        })
     },
 };
 </script>
-
-<style scoped>
-#flightCategory {
-    font-weight: 700;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 25px;
-    padding-left: 40px;
-    padding-right: 40px;
-    width: auto;
-}
-
-.vfr {
-    color: green;
-}
-
-.mvfr {
-    color: blue;
-}
-
-.ifr {
-    color: red;
-}
-
-.lifr {
-    color: magenta;
-}
-
-.container.metar {
-  min-width: 100%;
-}
-
-.location-metar {
-    min-height: 30vh;
-}
-</style>

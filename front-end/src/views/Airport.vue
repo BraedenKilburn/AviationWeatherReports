@@ -35,12 +35,6 @@ export default {
     AirportReport,
     Footer,
   },
-  data() {
-    return {
-    }
-  },
-  methods: {
-  },
 }
 </script>
 

@@ -4,11 +4,9 @@ import router from "./router";
 
 Vue.config.productionTip = false;
 
-
 new Vue({
   router,
   data: {
-    currAirport: "",
     stationInfo: null,
     metarInfo: null,
     tafInfo: null,

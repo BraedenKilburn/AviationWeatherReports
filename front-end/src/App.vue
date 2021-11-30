@@ -14,9 +14,9 @@
             <div class="collapse navbar-collapse justify-content-md-between" id="navbarNavAltMarkup">
                 <div class="navbar-nav mr-auto">
                     <router-link to="/" class="nav-link">Home</router-link>
-                    <router-link to="./airport" class="nav-link">Airports</router-link>
-                    <router-link to="./metar" class="nav-link">METAR</router-link>
-                    <router-link to="./taf" class="nav-link">TAF</router-link>
+                    <router-link to="/airport" class="nav-link">Airports</router-link>
+                    <router-link to="/metar" class="nav-link">METAR</router-link>
+                    <router-link to="/taf" class="nav-link">TAF</router-link>
                 </div>
                 <NavbarSearch />
             </div>
@@ -180,6 +180,10 @@ input {
 
 #navbarICAO:focus {
     outline: none;
+}
+
+a.router-link-exact-active {
+    color: white !important;
 }
 
 [type="search"]::-webkit-search-cancel-button, [type="search"]::-webkit-search-decoration {

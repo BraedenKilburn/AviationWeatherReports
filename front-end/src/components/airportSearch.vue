@@ -23,68 +23,41 @@ export default {
   },
   methods: {
     // Set our global airport variable and call the API function
-    async update(airport) {
-      this.$root.$data.currAirport = airport;
+    async update(icao) {
+      this.$root.$data.stationInfo = (await axios.get("/airport/" + icao)).data;
+      this.$root.$data.metarInfo = (await axios.get("/metar/" + icao)).data;
+      this.$root.$data.tafInfo = (await axios.get("/taf/" + icao)).data;
 
-      // TODO: This is a lot of API calls, can I cache the responses so I don't unnecessarily
-      // make a request for the same airport within the valid time (when nothing would have changed)?
-      // METAR and TAF requests could be requested and cached for at least 15 minutes
-      // Station requests could be cached for at least 24 hours
-
-      // Grab and save station info
-      let searchType = "station";
-      this.buildURL(this.$root.$data.currAirport, searchType);
-      await this.fetch(searchType);
-
-      // Grab and save METAR info
-      searchType = "metar";
-      this.buildURL(this.$root.$data.currAirport, searchType);
-      await this.fetch(searchType);
-
-      // Grab and save TAF info
-      searchType = "taf";
-      this.buildURL(this.$root.$data.currAirport, searchType);
-      await this.fetch(searchType);
+      // If we search on the home screen, redirect to the airport information tab
+      if (window.location.pathname == '/')
+        this.$router.push("/airport");
     },
 
-    // Function to set URL for API call
-    buildURL(icao, searchType) {
-      const key = "/?x-api-key=6d49d388dad844158755caf13c";
-      const url = "https://api.checkwx.com";
+    // Fetches and stores API data in data (old method)
+    // async fetch(searchType) {
+    //   // Fetch
+    //   const res = await axios.get(this.url);
+    //   const json = res.data;
 
-      if (searchType === "station") {
-        this.url = url + "/" + searchType + "/" + icao + key;
-      }
-      else {
-        this.url = url + "/" + searchType + "/" + icao + "/decoded" + key;
-      }
-    },
-
-    // Fetches and stores API data in data
-    async fetch(searchType) {
-      // Fetch
-      const res = await axios.get(this.url);
-      const json = res.data;
-
-      // Store Station info
-      if (searchType === "station")
-        this.$root.$data.stationInfo = json.data[0];
-      // Store METAR info
-      else if (searchType === "metar")
-        this.$root.$data.metarInfo = json.data[0];
-      // Store TAF info
-      else if (searchType === "taf") {
-        this.$root.$data.tafInfo = json.data[0];
-        if (res.data.data.length === 0) {
-          this.$root.$data.tafInfo = "invalid";
-        }
-        else {
-          if (window.location.pathname == '/') {
-            this.$router.push("/airport")
-          }
-        }
-      }
-    },
+    //   // Store Station info
+    //   if (searchType === "station")
+    //     this.$root.$data.stationInfo = json.data[0];
+    //   // Store METAR info
+    //   else if (searchType === "metar")
+    //     this.$root.$data.metarInfo = json.data[0];
+    //   // Store TAF info
+    //   else if (searchType === "taf") {
+    //     this.$root.$data.tafInfo = json.data[0];
+    //     if (res.data.data.length === 0) {
+    //       this.$root.$data.tafInfo = "invalid";
+    //     }
+    //     else {
+    //       if (window.location.pathname == '/') {
+    //         this.$router.push("/airport")
+    //       }
+    //     }
+    //   }
+    // },
   },
 }
 </script>
