@@ -12,7 +12,7 @@
           <div class="col-md-4 col-sm-12 mb-3" id="winds0">
             <img height="70px" src="/images/wind.svg" alt="Wind">
             <h3 class="m-0 p-0">Wind:</h3>
-            <h3>{{forecast.wind.degrees}}° at {{forecast.wind.speed}}kts</h3>
+            <h3>{{forecast.wind.degrees}}° at {{forecast.wind.speed_kts}}kts</h3>
           </div>
           <div class="col-md-4 col-sm-12 mb-3" id="clouds0">
             <img height="70px" src="/images/cloud.svg" alt="Cloud">
@@ -90,15 +90,17 @@ export default {
         return isoValidToTime.toLocaleString("en-US", {timeZone: this.airport.timezone.tzid})
       },
       cloudText(cloud) {
-        let cloudText = cloud.text + " at " + cloud.base_feet_agl.toLocaleString();
-        return cloudText;
+        if (cloud.code === "SKC")
+          return cloud.text;
+        else
+          return cloud.text + " at " + cloud.base_feet_agl.toLocaleString() + "'";
       },
       visibility(forecast) {
         if (forecast.visibility.miles === "Greater than 6"){
-           return "6+";
+           return "6+ miles";
         }
         else {
-          return forecast.visibility.miles;
+          return forecast.visibility.miles + " miles";
         }
       }
     },
