@@ -7,6 +7,7 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   data: {
+    icao: null,
     stationInfo: null,
     metarInfo: null,
     tafInfo: null,

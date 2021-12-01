@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import AirportSearch from "../components/airportSearch.vue"
+import AirportSearch from "./AirportSearch.vue"
 
 export default {
   name: 'MainSearchForm',

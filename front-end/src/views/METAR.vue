@@ -9,8 +9,7 @@
                 <MainSearchForm v-if="this.$root.$data.metarInfo === null" header="METAR Report" />
 
                 <!-- If there's no stationInfo or metarInfo, alert the user and give them a new form -->
-                <InvalidRequest v-else-if="this.$root.$data.stationInfo === undefined" header="Invalid Airport" from="METAR Report" />
-                <InvalidRequest v-else-if="this.$root.$data.metarInfo === undefined" header="METAR not available" from="METAR Report" />
+                <InvalidRequest v-else-if="this.$root.$data.metarInfo === 'invalid'" header="METAR not available" from="METAR Report" />
 
                 <!-- If there is a METAR report saved already, display it instead -->
                 <MetarReport v-else :airport="this.$root.$data.stationInfo" :metar="this.$root.$data.metarInfo" />
@@ -39,9 +38,6 @@ export default {
 </script>
 
 <style scoped>
-.text.metar {
-  width: 100%;
-}
 
 /* Mobile Styles */
 

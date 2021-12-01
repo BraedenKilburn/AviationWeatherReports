@@ -9,7 +9,7 @@
                 <MainSearchForm v-if="this.$root.$data.stationInfo === null" header="Airport Information" />
 
                 <!-- If there's no stationInfo, alert the user and give them a new form -->
-                <InvalidRequest v-else-if="this.$root.$data.stationInfo === undefined" header="Invalid Airport" from="Airport Information" />
+                <InvalidRequest v-else-if="this.$root.$data.stationInfo === 'invalid'" header="Invalid Airport" from="Airport Information" />
 
                 <!-- If there is a station report saved already, display it instead -->
                 <AirportReport v-else/>

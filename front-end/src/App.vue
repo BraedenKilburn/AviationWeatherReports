@@ -142,6 +142,7 @@ body {
     position: relative;
     z-index: 10;
     padding-top: 6vh;
+    width: auto;
 }
 
 .text.index {

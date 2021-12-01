@@ -64,11 +64,12 @@ const getAirport = async (icao) => {
 		const json = res.data;
 
 		// Throw error for an empty object
-		if (json.results === 0) throw "Invalid Airport";
+		if (json.results === 0) throw icao + " is not a valid airport";
 
 		return json.data[0];
 	} catch (e) {
 		console.log("Error:", e);
+		throw e;
 	}
 };
 
@@ -87,11 +88,12 @@ const getMETAR = async (icao) => {
 		const json = res.data;
 
 		// Throw error for an empty object
-		if (json.results === 0) throw "No available METAR";
+		if (json.results === 0) throw "No available METAR for " + icao;
 
 		return json.data[0];
 	} catch (e) {
 		console.log("Error:", e);
+		throw e;
 	}
 };
 
@@ -110,11 +112,12 @@ const getTAF = async (icao) => {
 		const json = res.data;
 
 		// Throw error for an empty object
-		if (json.results === 0) throw "No available TAF";
+		if (json.results === 0) throw "No available TAF for " + icao;
 
 		return json.data[0];
 	} catch (e) {
 		console.log("Error:", e);
+		throw e;
 	}
 };
 
@@ -135,20 +138,22 @@ app.get('/airport/:icao', async (req, res) => {
 		// The airport was not found in our DB
 		else
 		{
-			console.log(`\n${icao} airport information not found in DB\nAttemptin to fetch airport info and add it to our DB`);
+			console.log(`\n${icao} airport information not found in DB\nAttempting to fetch airport info and add it to our DB`);
 
 			// Try and get the airport (possibly not valid)
 			try {
 				const airport = await getAirport(icao);
 
-				airport.accessedOn = new Date();
+				if (airport)
+				{airport.accessedOn = new Date();
 	
 				airports.insertOne(airport);
 				console.log(`\n${icao}'s airport information was successfully added to the DB`);
-				res.send(airport);	
+				res.send(airport);}	
 			}
+			// Airport not found
 			catch (error) {
-				console.log("\n", error);
+				console.log("Airport Not Received in API Fetch:", error);
 				res.sendStatus(404);
 			}
 		}
@@ -176,20 +181,22 @@ app.get('/metar/:icao', async (req, res) => {
 		// The METAR was not found in our DB
 		else
 		{
-			console.log(`\n${icao} METAR information not found in DB\nAttemptin to fetch METAR and add it to our DB`);
+			console.log(`\n${icao} METAR information not found in DB\nAttempting to fetch METAR and add it to our DB`);
 
 			// Try and get the METAR (possibly not valid)
 			try {
 				const metar = await getMETAR(icao);
 
-				metar.accessedOn = new Date();
+				if (metar)
+				{metar.accessedOn = new Date();
 	
 				metars.insertOne(metar);
 				console.log(`\n${icao}'s METAR report was successfully added to the DB`);
-				res.send(metar);	
+				res.send(metar);}	
 			}
+			// METAR Report not found
 			catch (error) {
-				console.log("\n", error);
+				console.log("Error Fetching METAR Report:", error);
 				res.sendStatus(404);
 			}
 		}
@@ -217,20 +224,24 @@ app.get('/taf/:icao', async (req, res) => {
 		// The TAF was not found in our DB
 		else
 		{
-			console.log(`\n${icao} TAF information not found in DB\nAttemptin to fetch TAF and add it to our DB`);
+			console.log(`\n${icao} TAF information not found in DB\nAttempting to fetch TAF and add it to our DB`);
 
 			// Try and get the TAF (possibly not valid)
 			try {
 				const taf = await getTAF(icao);
 
-				taf.accessedOn = new Date();
-	
-				tafs.insertOne(taf);
-				console.log(`\n${icao}'s TAF report was successfully added to the DB`);
-				res.send(taf);	
+				if (taf)
+				{
+					taf.accessedOn = new Date();
+		
+					tafs.insertOne(taf);
+					console.log(`\n${icao}'s TAF report was successfully added to the DB`);
+					res.send(taf);
+				}
 			}
+			// TAF Report not found
 			catch (error) {
-				console.log("\n", error);
+				console.log("Error Fetching TAF Report:", error);
 				res.sendStatus(404);
 			}
 		}

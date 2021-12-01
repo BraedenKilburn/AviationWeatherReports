@@ -31,11 +31,11 @@ export default {
     computed: {
         errorMessge: function() {
             if (this.header === 'Invalid Airport')
-                return "Try again using the ICAO standard naming convention";
+                return this.$root.$data.icao + " is unrecognized. Try again using the ICAO standard naming convention";
             else if (this.header === 'METAR not available')
-                return "This airport does not report METAR information";
+                return this.$root.$data.icao + " does not report METAR information";
             else if (this.header === 'TAF not available')
-                return "This airport does not report TAF forecasts";
+                return this.$root.$data.icao + " does not report TAF forecasts";
             else
                 return "Error Encountered!";
         }
@@ -48,6 +48,8 @@ export default {
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 25px;
     position: relative;
+    max-width: 70vw;
+    margin: auto;
 }
 
 h4 {

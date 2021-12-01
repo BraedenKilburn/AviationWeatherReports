@@ -11,7 +11,6 @@
     </div>
     <div
       class="container metar taf mt-4 mt-lg-0"
-      id="tafTable"
       v-for="forecast in this.taf.forecast"
       v-bind:key="forecast.index"
     >

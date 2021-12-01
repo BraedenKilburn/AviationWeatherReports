@@ -9,10 +9,10 @@
             <h3>Keep your head out of the clouds</h3>
 
             <AirportSearch/>
-            <div class="error mt-5 p-3" v-if="this.$root.$data.tafInfo === 'invalid'">
+            <div class="error mt-5 p-3" v-if="this.$root.$data.stationInfo === 'invalid'">
               <div>
                 <h4>Invalid Airport</h4>
-                <h5>Try again using the ICAO standard naming convention</h5>
+                <h5>{{this.$root.$data.icao}} is unrecognized. Try again using the ICAO standard naming convention</h5>
               </div>
             </div>
           </div>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import AirportSearch from "../components/airportSearch.vue"
+import AirportSearch from "../components/AirportSearch.vue"
 import Footer from "../components/Footer.vue"
 
 export default {
