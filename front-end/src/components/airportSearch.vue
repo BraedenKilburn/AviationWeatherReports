@@ -32,32 +32,6 @@ export default {
       if (window.location.pathname == '/')
         this.$router.push("/airport");
     },
-
-    // Fetches and stores API data in data (old method)
-    // async fetch(searchType) {
-    //   // Fetch
-    //   const res = await axios.get(this.url);
-    //   const json = res.data;
-
-    //   // Store Station info
-    //   if (searchType === "station")
-    //     this.$root.$data.stationInfo = json.data[0];
-    //   // Store METAR info
-    //   else if (searchType === "metar")
-    //     this.$root.$data.metarInfo = json.data[0];
-    //   // Store TAF info
-    //   else if (searchType === "taf") {
-    //     this.$root.$data.tafInfo = json.data[0];
-    //     if (res.data.data.length === 0) {
-    //       this.$root.$data.tafInfo = "invalid";
-    //     }
-    //     else {
-    //       if (window.location.pathname == '/') {
-    //         this.$router.push("/airport")
-    //       }
-    //     }
-    //   }
-    // },
   },
 }
 </script>

@@ -7,7 +7,11 @@
       <h4 class="col p-2 mb-sm-0 text-center">{{ observedTime }}</h4>
     </div>
     <div class="row metar justify-content-center">
-      <h2 class="col-3 col-lg-1 m-lg-4 mb-sm-0 text-center" id="flightCategory">
+      <h2
+        class="col-3 col-lg-1 m-lg-4 mb-sm-0 text-center"
+        v-bind:style="{ color: flightCategoryColor }"
+        id="flightCategory"
+      >
         <span class="metar"> {{ flightCategory }} </span>
       </h2>
     </div>
@@ -60,6 +64,11 @@
 <script>
 export default {
   name: "MetarReport",
+  data() {
+    return {
+      flightCategoryColor: "green", // Default VFR green
+    };
+  },
   props: {
     airport: Object,
     metar: Object,
@@ -83,7 +92,9 @@ export default {
       return "Observed: " + time + " " + zone;
     },
     flightCategory: function () {
-      return this.metar.flight_category;
+      let flight_category = this.metar.flight_category;
+      this.updateFlightCategoryColor(flight_category);
+      return flight_category;
     },
     wind: function () {
       if (this.metar.wind !== undefined) {
@@ -115,20 +126,17 @@ export default {
     },
   },
   methods: {
+    updateFlightCategoryColor(flight_category) {
+      if (flight_category === "VFR") this.flightCategoryColor = "green";
+      else if (flight_category === "MVFR") this.flightCategoryColor = "blue";
+      else if (flight_category === "IFR") this.flightCategoryColor = "red";
+      else if (flight_category === "LIFR") this.flightCategoryColor = "magenta";
+    },
     cloudText(cloud) {
       if (cloud.code === "SKC" || cloud.code === "CLR") return cloud.text;
       else
         return cloud.text + " at " + cloud.base_feet_agl.toLocaleString() + "'";
     },
-  },
-  mounted() {
-    // Do this after the page has been loaded
-    this.$nextTick(function () {
-      // Update class depending on flight category (necessary for styling)
-      let flightCategory =
-        this.$root.$data.metarInfo.flight_category.toLowerCase();
-      document.querySelector("#flightCategory").classList.add(flightCategory);
-    });
   },
 };
 </script>
@@ -141,22 +149,6 @@ export default {
   padding-left: 40px;
   padding-right: 40px;
   width: auto;
-}
-
-.vfr {
-  color: green;
-}
-
-.mvfr {
-  color: blue;
-}
-
-.ifr {
-  color: red;
-}
-
-.lifr {
-  color: magenta;
 }
 
 .container.metar {

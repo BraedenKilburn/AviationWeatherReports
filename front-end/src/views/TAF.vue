@@ -18,7 +18,7 @@
                         <!-- If there's no TAF Forecast retrieved yet, provide a form -->
                         <MainSearchForm v-if="this.$root.$data.tafInfo === null" header="TAF Forecast" />
                         <!-- If there is a TAF forecast saved already, display it instead -->
-                        <TafReport v-else/>
+                        <TafReport v-else :airport="this.$root.$data.stationInfo" :taf="this.$root.$data.tafInfo" />
                     </div>
                 </div>
                 <Footer />
