@@ -30,13 +30,13 @@ export default {
       {
         try {
           try {
-            this.$root.$data.stationInfo = (await axios.get("/airport/" + icao)).data;
+            this.$root.$data.stationInfo = (await axios.get("/api/airport/" + icao)).data;
 
             try {
-              this.$root.$data.metarInfo = (await axios.get("/metar/" + icao)).data;
+              this.$root.$data.metarInfo = (await axios.get("/api/metar/" + icao)).data;
 
               try {
-                this.$root.$data.tafInfo = (await axios.get("/taf/" + icao)).data;
+                this.$root.$data.tafInfo = (await axios.get("/api/taf/" + icao)).data;
 
               } catch (error) {
                 this.$root.$data.tafInfo = 'invalid';

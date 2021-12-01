@@ -2,7 +2,7 @@ const express = require('express');
 const { MongoClient } = require('mongodb');
 const axios = require('axios');
 
-const PORT = 3000;
+const PORT = 3001;
 const key = '/?x-api-key=6d49d388dad844158755caf13c';
 const url = 'https://api.checkwx.com';
 
@@ -122,7 +122,7 @@ const getTAF = async (icao) => {
 };
 
 // Get airport information
-app.get('/airport/:icao', async (req, res) => {
+app.get('/api/airport/:icao', async (req, res) => {
 	try {
 		let icao = req.params.icao.toUpperCase();
 
@@ -165,7 +165,7 @@ app.get('/airport/:icao', async (req, res) => {
 });
 
 // Get METAR report
-app.get('/metar/:icao', async (req, res) => {
+app.get('/api/metar/:icao', async (req, res) => {
 	try {
 		let icao = req.params.icao.toUpperCase();
 
@@ -208,7 +208,7 @@ app.get('/metar/:icao', async (req, res) => {
 });
 
 // Get TAF report
-app.get('/taf/:icao', async (req, res) => {
+app.get('/api/taf/:icao', async (req, res) => {
 	try {
 		let icao = req.params.icao.toUpperCase();
 
