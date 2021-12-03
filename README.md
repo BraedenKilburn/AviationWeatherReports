@@ -10,7 +10,7 @@ This is an aviation weather report website.
 - Dynamically update using Vue.js, a progressive JavaScript framework
 - Run a back-end server on Node.js
 - Save results using MongoDB
-- Retrieve saved airports using a RESTful API built with Express
+- Retrieve saved airports using a REST API built with Express
 
 ### Background
 
