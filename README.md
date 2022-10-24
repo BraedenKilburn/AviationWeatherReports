@@ -1,6 +1,6 @@
-# Creative Project: Aviation Weather Report
+# Aviation Weather Report
 
-This is an aviation weather report website.
+This is an aviation weather report website. You can retrieve airport information as well as METAR and TAF reports for a specified airport.
 
 ## This website will:
 
@@ -14,7 +14,7 @@ This is an aviation weather report website.
 
 ### Background
 
-There are many websites that provide this functionality already; however, I believe that they all lack modern design and are, typically, visually unappealing. I hope to accomplish both **functionality** and **visual appeal** in my project. 
+There are many websites that provide this functionality already; however, I believe that they all lack modern design and are, typically, visually unappealing. I hope to accomplish both **functionality** and **visual appeal** in my project.
 
 ### Pages
 
