@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import AirportSearch from '../components/AirportSearch.vue'
+import AirportSearch from '@/components/AirportSearch.vue'
 import Footer from '../components/Footer.vue'
 
 export default {
