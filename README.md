@@ -8,8 +8,8 @@ This is an aviation weather report website. You can retrieve airport information
 - Display the airport and weather details
 - Utilize Responsive Design
 - Dynamically update using Vue.js, a progressive JavaScript framework
-- Run a back-end server on Node.js
-- Save results using MongoDB
+- Run a back-end server on Node.js written in TypeScript
+- Save results using AWS DynamoDB
 - Retrieve saved airports using a REST API built with Express
 
 ### Background
