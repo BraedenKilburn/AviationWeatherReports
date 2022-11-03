@@ -1,31 +1,39 @@
 <template>
-    <main>
-        <div class="container-fluid">
-            <section class="showcase airport d-flex justify-content-center align-items-top text-center">
-                <video src="/videos/valley.mp4" playsinline muted loop autoplay></video>
-                <div class="overlay"></div>
+  <main>
+    <div class="container-fluid">
+      <section
+        class="showcase airport d-flex justify-content-center align-items-top text-center"
+      >
+        <video src="/videos/valley.mp4" playsinline muted loop autoplay></video>
+        <div class="overlay"></div>
 
-                <!-- If there's no airport information retrieved yet, provide a form -->
-                <MainSearchForm v-if="this.$root.$data.stationInfo === null" header="Airport Information" />
+        <!-- If there's no airport information retrieved yet, provide a form -->
+        <MainSearchForm
+          v-if="this.$root.$data.stationInfo === null"
+          header="Airport Information"
+        />
 
-                <!-- If there's no stationInfo, alert the user and give them a new form -->
-                <InvalidRequest v-else-if="this.$root.$data.stationInfo === 'invalid'" header="Invalid Airport" from="Airport Information" />
+        <!-- If there's no stationInfo, alert the user and give them a new form -->
+        <InvalidRequest
+          v-else-if="this.$root.$data.stationInfo === 'invalid'"
+          header="Invalid Airport"
+          from="Airport Information"
+        />
 
-                <!-- If there is a station report saved already, display it instead -->
-                <AirportReport v-else/>
+        <!-- If there is a station report saved already, display it instead -->
+        <AirportReport v-else />
 
-                <Footer />
-            </section>
-        </div>
-    </main>
+        <Footer />
+      </section>
+    </div>
+  </main>
 </template>
 
-
 <script>
-import MainSearchForm from "../components/MainSearchForm.vue"
-import InvalidRequest from "../components/InvalidRequest.vue"
-import Footer from "../components/Footer.vue"
-import AirportReport from "../components/AirportReport.vue"
+import MainSearchForm from '../components/MainSearchForm.vue'
+import InvalidRequest from '../components/InvalidRequest.vue'
+import Footer from '../components/Footer.vue'
+import AirportReport from '../components/AirportReport.vue'
 
 export default {
   name: 'Airport',
@@ -39,15 +47,14 @@ export default {
 </script>
 
 <style scoped>
-
 .text.metar {
-    position: relative;
-    z-index: 10;
-    padding-top: 6vh;
+  position: relative;
+  z-index: 10;
+  padding-top: 6vh;
 }
 
 .showcase.airport {
-    padding: 0%;
+  padding: 0%;
 }
 
 /* Mobile Styles */
@@ -57,7 +64,7 @@ export default {
     flex-direction: column;
   }
   footer {
-      margin-top: 20px;
+    margin-top: 20px;
   }
 }
 </style>

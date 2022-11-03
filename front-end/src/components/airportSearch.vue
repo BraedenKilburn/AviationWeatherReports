@@ -1,66 +1,78 @@
 <template>
-<div>
-<form @submit.prevent class="d-flex justify-content-center mt-4 mr-4 mainForm" action="">
-    <input v-model="icao" type="search" name="airportCode" id="mainICAO" placeholder="Airport ICAO" autocorrect="off">
-    <button @click="update(icao)" type="submit" class="btn btn-outline-light">Search</button>
-</form>
-<br/>
-<p>{{message}}</p>
-</div>
+  <div>
+    <form
+      @submit.prevent
+      class="d-flex justify-content-center mt-4 mr-4 mainForm"
+    >
+      <input
+        v-model="icao"
+        type="search"
+        name="airportCode"
+        id="mainICAO"
+        placeholder="Airport ICAO"
+        autocorrect="off"
+      />
+      <button @click="update(icao)" type="submit" class="btn btn-outline-light">
+        Search
+      </button>
+    </form>
+    <br />
+    <p>{{ message }}</p>
+  </div>
 </template>
 
 <script>
-const axios = require("axios");
+import axios from 'axios'
 
 export default {
   name: 'AirportSearch',
   data() {
     return {
-      icao: "",
-      url: "",
-      message: "",
+      icao: '',
+      url: '',
+      message: '',
     }
   },
   methods: {
     // Set our global airport variable and call the API function
     async update(icao) {
-      this.$root.$data.icao = icao;
+      this.$root.$data.icao = icao
 
-      if (icao.length === 3 || icao.length === 4)
-      {
+      if (icao.length === 3 || icao.length === 4) {
         try {
-          try {
-            this.$root.$data.stationInfo = (await axios.get("/api/airport/" + icao)).data;
+          await Promise.all([
+            this.getStationInfo(icao),
+            this.getMetar(icao),
+            this.getTaf(icao),
+          ])
 
-            try {
-              this.$root.$data.metarInfo = (await axios.get("/api/metar/" + icao)).data;
-
-              try {
-                this.$root.$data.tafInfo = (await axios.get("/api/taf/" + icao)).data;
-
-              } catch (error) {
-                this.$root.$data.tafInfo = 'invalid';
-              }
-
-            } catch (error) {
-              this.$root.$data.metarInfo = 'invalid';
-              this.$root.$data.tafInfo = 'invalid';
-            }
-
-            // If we search on the home screen, redirect to the airport information tab
-            if (window.location.pathname == '/')
-              this.$router.push("/airport");
-
-          } catch (error) {
-            this.$root.$data.stationInfo = 'invalid';
-            this.$root.$data.metarInfo = 'invalid';
-            this.$root.$data.tafInfo = 'invalid';
-          }
-        } catch (error) {console.log(error)}
+          // If we search on the home screen, redirect to the airport information tab
+          if (window.location.pathname == '/') this.$router.push('/airport')
+        } catch (error) {
+          this.$root.$data.stationInfo = 'invalid'
+        }
+      } else {
+        console.error('Invalid ICAO')
+        this.$root.$data.stationInfo = 'invalid'
       }
-      else {
-        this.$root.$data.stationInfo = 'invalid';
-      }
+    },
+    // Get the station info from backend
+    async getStationInfo(icao) {
+      this.url = `/api/airport/${icao}`
+      const response = await axios.get(this.url)
+      this.$root.$data.stationInfo = response.data
+    },
+    // Get the METAR from backend
+    async getMetar(icao) {
+      this.url = `/api/metar/${icao}`
+      const response = await axios.get(this.url)
+      this.$root.$data.metarInfo = response.data
+    },
+    // Get the TAF from backend
+    async getTaf(icao) {
+      this.url = `/api/taf/${icao}`
+      const response = await axios.get(this.url)
+      this.$root.$data.tafInfo = response.data
     },
   },
 }
