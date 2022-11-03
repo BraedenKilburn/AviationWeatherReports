@@ -48,7 +48,6 @@ export default {
         // If we search on the home screen, redirect to the airport information tab
         if (window.location.pathname == '/') this.$router.push('/airport')
       } else {
-        console.error('Invalid ICAO')
         this.$root.$data.stationInfo = 'invalid'
         this.$root.$data.metarInfo = 'invalid'
         this.$root.$data.tafInfo = 'invalid'
