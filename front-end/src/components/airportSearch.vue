@@ -39,40 +39,50 @@ export default {
       this.$root.$data.icao = icao
 
       if (icao.length === 3 || icao.length === 4) {
-        try {
-          await Promise.all([
-            this.getStationInfo(icao),
-            this.getMetar(icao),
-            this.getTaf(icao),
-          ])
+        await Promise.all([
+          this.getStationInfo(icao),
+          this.getMetar(icao),
+          this.getTaf(icao),
+        ])
 
-          // If we search on the home screen, redirect to the airport information tab
-          if (window.location.pathname == '/') this.$router.push('/airport')
-        } catch (error) {
-          this.$root.$data.stationInfo = 'invalid'
-        }
+        // If we search on the home screen, redirect to the airport information tab
+        if (window.location.pathname == '/') this.$router.push('/airport')
       } else {
         console.error('Invalid ICAO')
         this.$root.$data.stationInfo = 'invalid'
+        this.$root.$data.metarInfo = 'invalid'
+        this.$root.$data.tafInfo = 'invalid'
       }
     },
     // Get the station info from backend
     async getStationInfo(icao) {
       this.url = `/api/airport/${icao}`
-      const response = await axios.get(this.url)
-      this.$root.$data.stationInfo = response.data
+      const { data } = await axios.get(this.url).catch(() => {
+        return {
+          data: 'invalid',
+        }
+      })
+      this.$root.$data.stationInfo = data
     },
     // Get the METAR from backend
     async getMetar(icao) {
       this.url = `/api/metar/${icao}`
-      const response = await axios.get(this.url)
-      this.$root.$data.metarInfo = response.data
+      const { data } = await axios.get(this.url).catch(() => {
+        return {
+          data: 'invalid',
+        }
+      })
+      this.$root.$data.metarInfo = data
     },
     // Get the TAF from backend
     async getTaf(icao) {
       this.url = `/api/taf/${icao}`
-      const response = await axios.get(this.url)
-      this.$root.$data.tafInfo = response.data
+      const { data } = await axios.get(this.url).catch(() => {
+        return {
+          data: 'invalid',
+        }
+      })
+      this.$root.$data.tafInfo = data
     },
   },
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="text metar">
+  <div class="text metar d-flex flex-column justify-content-center">
     <div class="row metar" id="airportName">
       <h1 class="col p-2 pb-sm-0 mb-sm-0 text-center">{{ airportName }}</h1>
     </div>
@@ -63,11 +63,11 @@
 
 <script>
 export default {
-  name: "MetarReport",
+  name: 'MetarReport',
   data() {
     return {
-      flightCategoryColor: "green", // Default VFR green
-    };
+      flightCategoryColor: 'green', // Default VFR green
+    }
   },
   props: {
     airport: Object,
@@ -75,70 +75,70 @@ export default {
   },
   computed: {
     airportName: function () {
-      let airportICAO = this.metar.icao;
-      let name = this.metar.station.name;
-      return airportICAO + " - " + name;
+      let airportICAO = this.metar.icao
+      let name = this.metar.station.name
+      return airportICAO + ' - ' + name
     },
     observedTime: function () {
-      let isoDate = new Date(this.metar.observed);
-      let time = isoDate.toLocaleString("en-US", {
+      let isoDate = new Date(this.metar.observed)
+      let time = isoDate.toLocaleString('en-US', {
         timeZone: this.airport.timezone.tzid,
-      });
-      let zone = this.airport.timezone.zone;
+      })
+      let zone = this.airport.timezone.zone
 
       // If the time zone name is undefined, use the tzid instead
-      if (zone === undefined) zone = this.airport.timezone.tzid;
+      if (zone === undefined) zone = this.airport.timezone.tzid
 
-      return "Observed: " + time + " " + zone;
+      return 'Observed: ' + time + ' ' + zone
     },
     flightCategory: function () {
-      let flight_category = this.metar.flight_category;
-      this.updateFlightCategoryColor(flight_category);
-      return flight_category;
+      let flight_category = this.metar.flight_category
+      this.updateFlightCategoryColor(flight_category)
+      return flight_category
     },
     wind: function () {
       if (this.metar.wind !== undefined) {
-        let windDirection = this.metar.wind.degrees;
-        let windSpeed = this.metar.wind.speed_kts;
+        let windDirection = this.metar.wind.degrees
+        let windSpeed = this.metar.wind.speed_kts
 
-        return windDirection + "° at " + windSpeed + "kts";
+        return windDirection + '° at ' + windSpeed + 'kts'
       } else {
-        return "0° at 0kts";
+        return '0° at 0kts'
       }
     },
     temperature: function () {
-      let tempC = this.metar.temperature.celsius;
-      let tempF = this.metar.temperature.fahrenheit;
+      let tempC = this.metar.temperature.celsius
+      let tempF = this.metar.temperature.fahrenheit
 
-      return tempF + "°F / " + tempC + "°C";
+      return tempF + '°F / ' + tempC + '°C'
     },
     visibility: function () {
-      return this.metar.visibility.miles + " miles";
+      return this.metar.visibility.miles + ' miles'
     },
     barometer: function () {
-      return this.metar.barometer.hg.toFixed(2) + " inHg";
+      return this.metar.barometer.hg.toFixed(2) + ' inHg'
     },
     dewpoint: function () {
-      let dewpointC = this.metar.dewpoint.celsius;
-      let dewpointF = this.metar.dewpoint.fahrenheit;
+      let dewpointC = this.metar.dewpoint.celsius
+      let dewpointF = this.metar.dewpoint.fahrenheit
 
-      return dewpointF + "°F / " + dewpointC + "°C";
+      return dewpointF + '°F / ' + dewpointC + '°C'
     },
   },
   methods: {
     updateFlightCategoryColor(flight_category) {
-      if (flight_category === "VFR") this.flightCategoryColor = "green";
-      else if (flight_category === "MVFR") this.flightCategoryColor = "blue";
-      else if (flight_category === "IFR") this.flightCategoryColor = "red";
-      else if (flight_category === "LIFR") this.flightCategoryColor = "magenta";
+      if (flight_category === 'VFR') this.flightCategoryColor = 'green'
+      else if (flight_category === 'MVFR') this.flightCategoryColor = 'blue'
+      else if (flight_category === 'IFR') this.flightCategoryColor = 'red'
+      else if (flight_category === 'LIFR') this.flightCategoryColor = 'magenta'
     },
     cloudText(cloud) {
-      if (cloud.code === "SKC" || cloud.code === "CLR") return cloud.text;
+      if (cloud.code === 'SKC' || cloud.code === 'CLR') return cloud.text
       else
-        return cloud.text + " at " + cloud.base_feet_agl.toLocaleString() + "'";
+        return cloud.text + ' at ' + cloud.base_feet_agl.toLocaleString() + "'"
     },
   },
-};
+}
 </script>
 
 <style scoped>

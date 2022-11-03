@@ -1,5 +1,5 @@
 <template>
-  <div class="text metar">
+  <div class="text metar d-flex flex-column justify-content-center">
     <div class="row metar" id="airportName">
       <h1 class="col p-2 pb-sm-0 mb-sm-0 text-center">{{ airportName }}</h1>
     </div>
@@ -49,70 +49,70 @@
 
 <script>
 export default {
-  name: "TafReport",
+  name: 'TafReport',
   props: {
     airport: Object,
     taf: Object,
   },
   computed: {
     airportName: function () {
-      let airportICAO = this.taf.icao;
-      let name = this.taf.station.name;
-      return airportICAO + " - " + name;
+      let airportICAO = this.taf.icao
+      let name = this.taf.station.name
+      return airportICAO + ' - ' + name
     },
     startTime: function () {
-      let isoFromDate = new Date(this.taf.timestamp.from);
-      let startingTime = isoFromDate.toLocaleString("en-US", {
+      let isoFromDate = new Date(this.taf.timestamp.from)
+      let startingTime = isoFromDate.toLocaleString('en-US', {
         timeZone: this.airport.timezone.tzid,
-      });
-      let zone = this.airport.timezone.zone;
+      })
+      let zone = this.airport.timezone.zone
 
       // If the time zone name is undefined, use the tzid instead
-      if (zone === undefined) zone = this.airport.timezone.tzid;
+      if (zone === undefined) zone = this.airport.timezone.tzid
 
-      return "From: " + startingTime + " " + zone;
+      return 'From: ' + startingTime + ' ' + zone
     },
     endTime: function () {
-      let isoToDate = new Date(this.taf.timestamp.to);
-      let endingTime = isoToDate.toLocaleString("en-US", {
+      let isoToDate = new Date(this.taf.timestamp.to)
+      let endingTime = isoToDate.toLocaleString('en-US', {
         timeZone: this.airport.timezone.tzid,
-      });
-      let zone = this.airport.timezone.zone;
+      })
+      let zone = this.airport.timezone.zone
 
       // If the time zone name is undefined, use the tzid instead
-      if (zone === undefined) zone = this.airport.timezone.tzid;
+      if (zone === undefined) zone = this.airport.timezone.tzid
 
-      return "From: " + endingTime + " " + zone;
+      return 'From: ' + endingTime + ' ' + zone
     },
   },
   methods: {
     validFromTime(fromTime) {
-      let isoValidFromTime = new Date(fromTime);
-      return isoValidFromTime.toLocaleString("en-US", {
+      let isoValidFromTime = new Date(fromTime)
+      return isoValidFromTime.toLocaleString('en-US', {
         timeZone: this.airport.timezone.tzid,
-      });
+      })
     },
     validToTime(toTime) {
-      let isoValidToTime = new Date(toTime);
-      return isoValidToTime.toLocaleString("en-US", {
+      let isoValidToTime = new Date(toTime)
+      return isoValidToTime.toLocaleString('en-US', {
         timeZone: this.airport.timezone.tzid,
-      });
+      })
     },
     cloudText(cloud) {
-      if (cloud.code === "SKC") return cloud.text;
+      if (cloud.code === 'SKC') return cloud.text
       else
-        return cloud.text + " at " + cloud.base_feet_agl.toLocaleString() + "'";
+        return cloud.text + ' at ' + cloud.base_feet_agl.toLocaleString() + "'"
     },
     visibility(forecast) {
-      if (forecast.visibility.miles === "Greater than 6") {
-        return "6+ miles";
+      if (!forecast.visibility) return 'Not available'
+      if (forecast.visibility.miles === 'Greater than 6') {
+        return '6+ miles'
       } else {
-        return forecast.visibility.miles_float + " miles";
+        return forecast.visibility.miles_float + ' miles'
       }
     },
   },
-};
+}
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
