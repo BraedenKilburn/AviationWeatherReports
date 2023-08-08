@@ -49,7 +49,7 @@ const submit = async () => {
       router.push({ name: props.name })
     }
   } catch (error) {
-    console.error((error as AxiosError).response?.statusText);
+    console.error(error);
     errorMessage.value = (error as AxiosError).response?.statusText
       ?? 'Something went wrong, please try again later.';
   } finally {
