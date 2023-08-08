@@ -28,7 +28,7 @@ export const fetchInfo = async (type: string, airportCode: string) => {
  * @param icao airport icao code
  * @returns array with airport, metar and taf info
  */
-export const fetchAllInfo = async (icao: string) => {
+export const fetchAllInfo = async (icao: string): Promise<[API.AirportResponse, API.MetarResponse, API.TafResponse]> => {
   return await Promise.all([
     fetchInfo('airport', icao),
     fetchInfo('metar', icao),

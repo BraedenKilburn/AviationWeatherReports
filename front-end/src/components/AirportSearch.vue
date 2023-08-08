@@ -4,7 +4,7 @@ import { fetchAllInfo } from '@/api';
 import { useVuelidate } from '@vuelidate/core'
 import { required, minLength, maxLength, alphaNum } from '@vuelidate/validators'
 import { useRootStore } from '@/stores/root'
-import LoadingIndicator from '@/components/svg/LoadingIndicator.vue'
+import { LoadingIndicator } from '@/components/svg';
 import type { AxiosError } from 'axios';
 import { useRouter } from 'vue-router';
 
@@ -46,7 +46,7 @@ const submit = async () => {
     } else if (!store.taf && props.name === 'taf') {
       errorMessage.value = `TAF not found for ${store.icao}, please try again.`;
     } else {
-      router.push({ name: props.name })
+      router.push({ name: props.name.toLowerCase() })
     }
   } catch (error) {
     console.error(error);

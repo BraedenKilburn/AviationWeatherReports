@@ -1,5 +1,9 @@
 import axios from '../axios.js';
 
+const handlePromise = (promise) => {
+  return promise.catch(() => null);
+};
+
 /**
  * Asynchronous function used to fetch our airport/station information
  * and will throw an error if nothing is returned.
@@ -9,13 +13,31 @@ import axios from '../axios.js';
  */
 const getAirport = async (icao) => {
   try {
-      const { data } = await axios.get(`/station/${icao}/`);
-      return data.data[0];
+    const [airport, datetime] = await Promise.all([
+      handlePromise(axios.get(`/station/${icao}/`)),
+      handlePromise(axios.get(`/station/${icao}/datetime`))
+    ]);
+
+    if (!airport) {
+      throw new Error('Failed to fetch airport data');
+    }
+
+    const airportInfo = airport.data.data[0];
+
+    if (!datetime) return airportInfo;
+
+    const datetimeInfo = datetime.data.data[0];
+
+    return {
+      ...airportInfo,
+      ...datetimeInfo,
+    }
   } catch (e) {
-      console.error('Error:', e);
-      throw e;
+    console.error('Error:', e);
+    throw e;
   }
 };
+
 
 export const retrieveAirportInfo = async (req, res) => {
   let icao = req.params.icao.toUpperCase();

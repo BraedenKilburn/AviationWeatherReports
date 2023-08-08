@@ -2,9 +2,10 @@
 import { useRootStore } from '@/stores/root'
 import { useRoute } from 'vue-router'
 import MainPageContent from '@/components/MainPageContent.vue'
+import MetarReport from '@/components/MetarReport.vue';
 
 const route = useRoute()
-const name = route.name?.toString() ?? 'METAR'
+const name = route.name?.toString() ?? 'metar'
 
 const store = useRootStore()
 </script>
@@ -12,16 +13,15 @@ const store = useRootStore()
 <template>
   <main-page-content
     v-if="!store.metar"
+    v-bind="$attrs"
     header="METAR Report"
     subheader="Get the latest METAR information"
     :name="name"
   />
-  <div
+  <metar-report
     v-else
-    class="airport-info"
-  >
-    <h1>METAR View for {{ store.icao }}</h1>
-  </div>
+    v-bind="$attrs"
+  />
 </template>
 
 <style scoped lang="scss"></style>

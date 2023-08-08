@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import GithubLogo from '@/components/svg/GithubLogo.vue'
-import ThemeToggle from './ThemeToggle.vue'
+import { GithubLogo } from '@/components/svg';
+import ThemeToggle from '@/components/ThemeToggle.vue'
 </script>
 
 <template>
@@ -54,7 +54,7 @@ footer {
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
   footer {
     justify-content: space-between;
     padding: 0 10px;

@@ -2,7 +2,7 @@
 import { type RouteRecordRaw } from 'vue-router'
 import { ref } from 'vue'
 import ThemeToggle from '@/components/ThemeToggle.vue'
-import MenuHamburger from '@/components/svg/MenuHamburger.vue'
+import { MenuHamburger } from '@/components/svg'
 
 defineProps<{
   links: RouteRecordRaw[]

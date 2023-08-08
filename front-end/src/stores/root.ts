@@ -2,6 +2,9 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 type Themes = 'dark' | 'light'
+type Airport = API.AirportResponse;
+type Metar = API.MetarResponse;
+type Taf = API.TafResponse;
 
 export const useRootStore = defineStore('root', () => {
   const theme = ref('dark')
@@ -12,9 +15,9 @@ export const useRootStore = defineStore('root', () => {
   }
 
   const icao = ref('');
-  const airport = ref(null);
-  const metar = ref(null);
-  const taf = ref(null);
+  const airport = ref<Airport | null>(null);
+  const metar = ref<Metar | null>(null);
+  const taf = ref<Taf | null>(null);
 
   return {
     icao,

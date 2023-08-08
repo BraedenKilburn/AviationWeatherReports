@@ -6,7 +6,7 @@ import MainPageContent from '@/components/MainPageContent.vue';
   <main-page-content
     header="Aviation Weather Reports"
     subheader="Keep your head out of the clouds"
-    name="Airport"
+    name="airport"
   />
 </template>
 

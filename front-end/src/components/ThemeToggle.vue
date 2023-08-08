@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import ThemeIcon from './svg/ThemeIcon.vue'
+import { ThemeIcon } from '@/components/svg';
 import { useRootStore } from '@/stores/root'
 
 const store = useRootStore()

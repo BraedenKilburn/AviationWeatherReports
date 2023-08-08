@@ -2,9 +2,10 @@
 import { useRootStore } from '@/stores/root';
 import { useRoute } from 'vue-router';
 import MainPageContent from '@/components/MainPageContent.vue';
+import AirportReport from '@/components/AirportReport.vue';
 
 const route = useRoute();
-const name = route.name?.toString() ?? 'Airport';
+const name = route.name?.toString() ?? 'airport';
 
 const store = useRootStore();
 </script>
@@ -12,16 +13,15 @@ const store = useRootStore();
 <template>
   <main-page-content
     v-if="!store.airport"
+    v-bind="$attrs"
     header="Airport Information"
     subheader="Get the latest station information"
     :name="name"
   />
-  <div
+  <airport-report
     v-else
-    class="airport-info"
-  >
-    <h1>Airport View for {{ store.icao }}</h1>
-  </div>
+    v-bind="$attrs"
+  />
 </template>
 
 <style scoped lang="scss"></style>

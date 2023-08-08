@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router';
 import MainPageContent from '@/components/MainPageContent.vue';
 
 const route = useRoute();
-const name = route.name?.toString() ?? 'TAF';
+const name = route.name?.toString() ?? 'taf';
 
 const store = useRootStore();
 </script>
@@ -20,7 +20,7 @@ const store = useRootStore();
     v-else
     class="airport-info"
   >
-    <h1>Airport View for {{ store.icao }}</h1>
+    <h1>TAF View for {{ store.icao }}</h1>
   </div>
 </template>
 
