@@ -9,7 +9,13 @@ import { retrieveTAF } from './controllers/taf.js';
 const app = express();
 const port = process.env.PORT ?? 3000;
 
-app.use(cors())
+if (process.env.NODE_ENV === 'development') {
+	app.use(cors());
+} else {
+	app.use(cors({
+		origin: 'https://wx.braedenkilburn.com',
+	}));
+}
 
 app.get('/airport/:icao', retrieveAirportInfo);
 app.get('/metar/:icao', retrieveMetar);
