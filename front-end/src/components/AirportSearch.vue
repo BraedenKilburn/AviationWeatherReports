@@ -5,7 +5,7 @@ import { useVuelidate } from '@vuelidate/core'
 import { required, minLength, maxLength, alphaNum } from '@vuelidate/validators'
 import { useRootStore } from '@/stores/root'
 import { LoadingIndicator } from '@/components/svg';
-import type { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { useRouter } from 'vue-router';
 
 const props = defineProps<{
@@ -35,6 +35,8 @@ const submit = async () => {
   try {
     const [airport, metar, taf] = await fetchAllInfo(search.value);
 
+    if (!airport) throw new AxiosError(`Airport not found for ${search.value.toUpperCase()}`);
+
     store.icao = search.value.toUpperCase();
     store.airport = airport;
     store.metar = metar;
@@ -51,7 +53,7 @@ const submit = async () => {
     }
   } catch (error) {
     console.error(error);
-    errorMessage.value = (error as AxiosError).response?.statusText
+    errorMessage.value = (error as AxiosError).message
       ?? 'Something went wrong, please try again later.';
   } finally {
     loading.value = false

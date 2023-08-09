@@ -1,6 +1,9 @@
 {
-  "name": "wx-reports-new",
-  "version": "0.0.0",
+  "name": "wx-reports-ui",
+  "version": "1.0.0",
+  "author": {
+    "name": "Braeden Kilburn"
+  },
   "private": true,
   "scripts": {
     "dev": "vite",
