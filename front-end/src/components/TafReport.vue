@@ -1,118 +1,251 @@
+<script setup lang="ts">
+import { useRootStore } from '@/stores/root';
+import { computed } from 'vue';
+import {
+  CloudIcon,
+  WindIcon,
+  VisibilityIcon,
+} from '@/components/svg';
+
+const store = useRootStore();
+const airport = computed(() => store.airport as API.AirportResponse);
+
+const taf = computed(() => store.taf as API.TafResponse);
+const forecasts = computed(() => taf.value.forecast);
+
+const airportName = computed(() => `${taf.value.station.name} (${taf.value.icao})`);
+
+const startTime = computed(() => {
+  const date = new Date(`${taf.value.timestamp.from}Z`);
+  if (!airport.value.timezone) return date.toLocaleString();
+
+  const options: Intl.DateTimeFormatOptions = {
+    timeZone: airport.value.timezone.tzid,
+    dateStyle: 'long',
+    timeStyle: 'long',
+  };
+
+  return date.toLocaleString('en-US', options);
+});
+
+const endTime = computed(() => {
+  const date = new Date(`${taf.value.timestamp.to}Z`);
+  if (!airport.value.timezone) return date.toLocaleString();
+
+  const options: Intl.DateTimeFormatOptions = {
+    timeZone: airport.value.timezone.tzid,
+    dateStyle: 'long',
+    timeStyle: 'long',
+  };
+
+  return date.toLocaleString('en-US', options);
+});
+
+const validFromTime = (fromTime: string): string => {
+  let isoValidFromTime = new Date(`${fromTime}Z`)
+  if (!airport.value.timezone) return isoValidFromTime.toLocaleString()
+  
+  return isoValidFromTime.toLocaleString('en-US', {
+    timeZone: airport.value.timezone.tzid,
+  })
+}
+
+const validToTime = (toTime: string): string => {
+  let isoValidToTime = new Date(`${toTime}Z`)
+  if (!airport.value.timezone) return isoValidToTime.toLocaleString()
+  
+  return isoValidToTime.toLocaleString('en-US', {
+    timeZone: airport.value.timezone.tzid,
+  })
+}
+
+const winds = (wind?: API.Wind): string => {
+  if (!wind) return 'No wind data available';
+
+  const direction = wind.degrees;
+  const speed = wind.speed_kts;
+
+  return `${direction}° at ${speed} knots`;
+}
+
+const clouds = (clouds?: API.CloudLevel[]): string[] => {
+  if (!clouds) return ['No cloud data available'];
+
+  return clouds.map(cloud => {
+    const { code, text, base_feet_agl } = cloud;
+
+    if (code === 'SKC') return text ?? 'Clear skies';
+    return `${code} at ${base_feet_agl?.toLocaleString()}'`;
+  });
+}
+
+const visibility = (visibility?: API.Visibility): string => {
+  if (!visibility) return 'No visibility data available';
+
+  const distance = visibility.miles;
+  if (distance === 'Greater than 6') return distance;
+  return `${distance} SM`;
+}
+
+const iconSize = computed(() => 'max(2.5rem, 5vw)');
+</script>
+
 <template>
-  <div class="text metar d-flex flex-column justify-content-center">
-    <div class="row metar" id="airportName">
-      <h1 class="col p-2 pb-sm-0 mb-sm-0 text-center">{{ airportName }}</h1>
+  <div class="taf-info">
+    <div class="heading-info">
+      <h1 class="name">
+        {{ airportName }}
+      </h1>
+      <h2><strong>From:</strong> {{ startTime }}</h2>
+      <h2><strong>To:</strong> {{ endTime }}</h2>
     </div>
-    <div class="row metar" id="startingTime">
-      <h3 class="col p-2 mb-sm-0 text-center">{{ startTime }}</h3>
-    </div>
-    <div class="row metar" id="endingTime">
-      <h3 class="col p-2 mb-sm-4 text-center">{{ endTime }}</h3>
-    </div>
-    <div
-      class="container metar taf mt-4 mt-lg-0"
-      v-for="forecast in this.taf.forecast"
-      v-bind:key="forecast.index"
-    >
-      <div class="row time-period justify-content-center" id="validTimePeriod0">
-        <h4 class="col-12 col-lg-9 mb-3 mb-md-0 text-center">
-          {{ validFromTime(forecast.timestamp.from) }} to
-          {{ validToTime(forecast.timestamp.to) }}
-          {{ airport.timezone.zone }}
-        </h4>
-      </div>
-      <div class="row d-flex align-items-center location">
-        <div class="col-md-4 col-sm-12 mb-3" id="winds0">
-          <img height="70px" src="/images/wind.svg" alt="Wind" />
-          <h3 class="m-0 p-0">Wind:</h3>
-          <h3 v-if="forecast.wind">
-            {{ forecast.wind.degrees }}° at {{ forecast.wind.speed_kts }}kts
-          </h3>
-          <h3 v-else>Not available</h3>
+    <div class="taf-reports">
+      <div
+        v-for="(forecast, idx) in taf.forecast"
+        :key="idx"
+        class="report"
+      >
+        <div class="time-valid">
+          <div>{{ validFromTime(forecast.timestamp.from) }}</div>
+          <div class="spacer">
+            to
+          </div>
+          <div>{{ validToTime(forecast.timestamp.to) }}</div>
         </div>
-        <div class="col-md-4 col-sm-12 mb-3" id="clouds0">
-          <img height="70px" src="/images/cloud.svg" alt="Cloud" />
-          <h3 class="m-0 pb-2">Clouds (AGL):</h3>
-          <h3 v-for="cloud in forecast.clouds" v-bind:key="cloud.index">
-            {{ cloudText(cloud) }}
-          </h3>
-        </div>
-        <div class="col-md-4 col-sm-12 mb-3" id="visibility0">
-          <img height="70px" src="/images/visibility.svg" alt="Visibility" />
-          <h3 class="m-0 p-0">Visibility:</h3>
-          <h3>{{ visibility(forecast) }}</h3>
+        <div class="row">
+          <div class="column">
+            <wind-icon :size="iconSize" />
+            <div class="info-title">
+              Wind:
+            </div>
+            <div>{{ winds(forecast.wind) }}</div>
+          </div>
+          <div class="column">
+            <cloud-icon :size="iconSize" />
+            <div class="info-title">
+              Clouds:
+            </div>
+            <div
+              v-for="(cloud, idx) in clouds(forecast.clouds)"
+              :key="idx"
+            >
+              {{ cloud }}
+            </div>
+          </div>
+          <div class="column">
+            <visibility-icon :size="iconSize" />
+            <div class="info-title">
+              Visibility:
+            </div>
+            <div>{{ visibility(forecast.visibility) }}</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'TafReport',
-  props: {
-    airport: Object,
-    taf: Object,
-  },
-  computed: {
-    airportName: function () {
-      let airportICAO = this.taf.icao
-      let name = this.taf.station.name
-      return airportICAO + ' - ' + name
-    },
-    startTime: function () {
-      let isoFromDate = new Date(this.taf.timestamp.from)
-      let startingTime = isoFromDate.toLocaleString('en-US', {
-        timeZone: this.airport.timezone.tzid,
-      })
-      let zone = this.airport.timezone.zone
+<style scoped lang="scss">
+$gap: 1vh;
+$desktop-min-width: 769px;
 
-      // If the time zone name is undefined, use the tzid instead
-      if (zone === undefined) zone = this.airport.timezone.tzid
+.taf-info {
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: $gap;
+  margin-bottom: 20px;
 
-      return 'From: ' + startingTime + ' ' + zone
-    },
-    endTime: function () {
-      let isoToDate = new Date(this.taf.timestamp.to)
-      let endingTime = isoToDate.toLocaleString('en-US', {
-        timeZone: this.airport.timezone.tzid,
-      })
-      let zone = this.airport.timezone.zone
+  @media screen and (min-width: $desktop-min-width) {
+    margin-bottom: 0;
+  }
 
-      // If the time zone name is undefined, use the tzid instead
-      if (zone === undefined) zone = this.airport.timezone.tzid
+  .heading-info {
+    display: flex;
+    flex-direction: column;
+    gap: $gap;
 
-      return 'From: ' + endingTime + ' ' + zone
-    },
-  },
-  methods: {
-    validFromTime(fromTime) {
-      let isoValidFromTime = new Date(fromTime)
-      return isoValidFromTime.toLocaleString('en-US', {
-        timeZone: this.airport.timezone.tzid,
-      })
-    },
-    validToTime(toTime) {
-      let isoValidToTime = new Date(toTime)
-      return isoValidToTime.toLocaleString('en-US', {
-        timeZone: this.airport.timezone.tzid,
-      })
-    },
-    cloudText(cloud) {
-      if (cloud.code === 'SKC') return cloud.text
-      else
-        return cloud.text + ' at ' + cloud.base_feet_agl.toLocaleString() + "'"
-    },
-    visibility(forecast) {
-      if (!forecast.visibility) return 'Not available'
-      if (forecast.visibility.miles === 'Greater than 6') {
-        return '6+ miles'
-      } else {
-        return forecast.visibility.miles_float + ' miles'
+    h1.name {
+      text-align: center;
+      font-size: 1.75rem;
+      font-weight: bold;
+
+      @media (min-width: $desktop-min-width) {
+        font-size: 2.25rem;
       }
-    },
-  },
-}
-</script>
+    }
 
-<style scoped></style>
+    h2 {
+      font-size: 1.25rem;
+
+      @media (min-width: $desktop-min-width) {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  .taf-reports {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+
+    .report {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--color-border);
+
+      &:first-child {
+        border-top: 1px solid var(--color-border);
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .time-valid {
+        display: flex;
+        flex-direction: column;
+
+        @media screen and (min-width: $desktop-min-width) {
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+        }
+
+        div {
+          font-size: 1.5rem;
+          font-weight: bold;
+
+          &.spacer {
+            margin: 0 0.5rem;
+          }
+        }
+      }
+
+      .row {
+        display: flex;
+        flex-direction: column;
+        gap: $gap;
+        margin-top: 10px;
+        font-size: 1.25rem;
+
+        @media screen and (min-width: $desktop-min-width) {
+          flex-direction: row;
+        }
+
+        .column {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: $gap;
+          flex: 1;
+
+          .info-title {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}
+</style>

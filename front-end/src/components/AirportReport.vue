@@ -1,108 +1,107 @@
+<script setup lang="ts">
+import { useRootStore } from '@/stores/root';
+import {
+  PinIcon,
+  CompassIcon,
+  ElevationIcon,
+  OperationalIcon,
+} from '@/components/svg';
+import { computed } from 'vue';
+
+const store = useRootStore();
+
+// This AirportReport component is only displayed when there is a valid airport
+// in the store, thus we can safely assume that the store.airport is not null.
+const airport = computed(() => store.airport as API.AirportResponse);
+
+const airportName = computed(() => `${airport.value.name} (${airport.value.icao})`);
+const airportLocation = computed(() => {
+  const stateCode = airport.value.state?.code ?? '';
+  const cityName = airport.value.city ?? (airport.value.state?.name + ',') ?? '';
+  return `${cityName}, ${stateCode}`;
+});
+const airportCountry = computed(() => airport.value.country?.name);
+const airportLatitude = computed(() => airport.value.latitude.degrees);
+const airportLongitude = computed(() => airport.value.longitude.degrees);
+const airportElevation = computed(() => airport.value.elevation?.feet?.toLocaleString());
+const airportStatus = computed(() => airport.value.status);
+
+const iconSize = computed(() => 'max(2.5rem, 5vw)');
+</script>
+
 <template>
-  <div class="text d-flex flex-column justify-content-center">
-    <!-- Airport Name Heading -->
-    <div class="row text-center mt-3" id="airportName">
-      <h1 class="col p-3 mb-sm-0">{{ airportName }}</h1>
-    </div>
-    <div class="container">
-      <div class="row d-flex align-items-center location">
-        <div class="col-sm-6 text-center mb-3" id="airportLocation">
-          <img height="60px" src="/images/pin_drop.svg" alt="Pin Drop" />
-          <div class="col mt-2">
-            <div class="row">
-              <h2>{{ airportLocation }}</h2>
-            </div>
-            <div class="row">
-              <h2>{{ airportCountry }}</h2>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6 text-center mb-3" id="airportCoordinates">
-          <img height="60px" src="/images/compass.svg" alt="Compass" />
-          <div class="col mt-2">
-            <h3>{{ airportLatitude }}</h3>
-            <h3>{{ airportLongitude }}</h3>
-          </div>
-        </div>
+  <div class="airport-info">
+    <h1 class="name">
+      {{ airportName }}
+    </h1>
+    <div class="grid-container">
+      <div>
+        <pin-icon :size="iconSize" />
+        <p>{{ airportLocation }}</p>
+        <p>{{ airportCountry }}</p>
       </div>
-      <div class="row d-flex align-items-center location">
-        <div class="col-sm-6 text-center mb-3" id="airportElevation">
-          <img height="90px" src="/images/mountain.svg" alt="Elevation" />
-          <div class="col mt-2">
-            <div class="row">
-              <h3>Elevation (ft):</h3>
-            </div>
-            <div class="row">
-              <h3>{{ airportElevation }}</h3>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6 text-center mb-3" id="airportStatus">
-          <img height="60px" src="/images/operational.svg" alt="Operational" />
-          <div class="col mt-2">
-            <div class="row">
-              <h3>Status:</h3>
-            </div>
-            <div class="row">
-              <h3>{{ airportStatus }}</h3>
-            </div>
-          </div>
-        </div>
+      <div>
+        <compass-icon :size="iconSize" />
+        <p>{{ airportLatitude }}</p>
+        <p>{{ airportLongitude }}</p>
+      </div>
+      <div>
+        <elevation-icon :size="iconSize" />
+        <p>Elevation:</p>
+        <p>{{ airportElevation }}'</p>
+      </div>
+      <div>
+        <operational-icon :size="iconSize" />
+        <p>Status:</p>
+        <p>{{ airportStatus }}</p>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'AirportReport',
-  computed: {
-    airportName: function () {
-      let airport = this.$root.$data.stationInfo
-      let airportICAO = airport.icao
-      let name = airport.name
-      return airportICAO + ' - ' + name
-    },
-    airportLocation: function () {
-      let airport = this.$root.$data.stationInfo
-      let airportState = ''
-      if (airport.state != null) {
-        airportState = airport.state.code
-      }
-      let airportCity = airport.city
+<style scoped lang="scss">
+$gap: 1vh;
+$desktop-min-width: 769px;
 
-      if (airportCity === undefined && airport.state != null) {
-        return airport.state.name + ','
-      } else {
-        return airportCity + ', ' + airportState
-      }
-    },
-    airportCountry: function () {
-      let airport = this.$root.$data.stationInfo
-      return airport.country.name
-    },
-    airportLatitude: function () {
-      let airport = this.$root.$data.stationInfo
-      return airport.latitude.degrees
-    },
-    airportLongitude: function () {
-      let airport = this.$root.$data.stationInfo
-      return airport.longitude.degrees
-    },
-    airportElevation: function () {
-      let airport = this.$root.$data.stationInfo
-      return airport.elevation.feet.toLocaleString()
-    },
-    airportStatus: function () {
-      let airport = this.$root.$data.stationInfo
-      return airport.status
-    },
-  },
-}
-</script>
+.airport-info {
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: $gap;
+  margin-bottom: 20px;
 
-<style scoped>
-#airportName {
-  margin-bottom: 5vh !important;
+  @media screen and (min-width: $desktop-min-width) {
+    margin-bottom: 0;
+  }
+
+  .grid-container {
+    height: inherit;
+    display: grid;
+    grid-template-columns: 1fr; // 1 column per row for mobile
+    gap: 1rem;
+    align-items: center;
+
+    @media (min-width: $desktop-min-width) { // Desktop breakpoint
+      grid-template-columns: repeat(2, 1fr); // 2 columns per row
+    }
+  }
+
+  .name {
+    font-size: 1.75rem;
+    font-weight: bold;
+
+    @media (min-width: $desktop-min-width) {
+      font-size: 2.25rem;
+    }
+  }
+
+  p {
+    font-size: 1.5rem;
+
+    @media (min-width: $desktop-min-width) {
+      font-size: 2rem;
+    }
+  }
 }
 </style>
