@@ -8,13 +8,12 @@ This is an aviation weather report website. You can retrieve airport information
 - Display the airport and weather details
 - Utilize Responsive Design
 - Dynamically update using Vue.js, a progressive JavaScript framework
-- Run a back-end server on Node.js written in TypeScript
-- Save results using AWS DynamoDB
+- Run a back-end server on Node.js to retrieve the station reports
 - Retrieve saved airports using a REST API built with Express
 
 ### Background
 
-There are many websites that provide this functionality already; however, I believe that they all lack modern design and are, typically, visually unappealing. I hope to accomplish both **functionality** and **visual appeal** in my project.
+There are many websites that provide this functionality already; however, I believe that they all are, typically, visually complicated. I hope to accomplish both **functionality** and **visual simplicity** in my project.
 
 ### Pages
 
@@ -25,6 +24,4 @@ There are many websites that provide this functionality already; however, I beli
 
 ### TODO
 
-- Reduce video background size
-- Reduce GET request time
-- Tweak responsive design for better mobile viewing
+- Save results using AWS DynamoDB to cache results
