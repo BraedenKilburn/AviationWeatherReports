@@ -34,25 +34,23 @@ const iconSize = computed(() => 'max(2.5rem, 5vw)');
     <h1 class="name">
       {{ airportName }}
     </h1>
-    <div class="row">
-      <div class="stacked">
+    <div class="grid-container">
+      <div>
         <pin-icon :size="iconSize" />
         <p>{{ airportLocation }}</p>
         <p>{{ airportCountry }}</p>
       </div>
-      <div class="stacked">
+      <div>
         <compass-icon :size="iconSize" />
         <p>{{ airportLatitude }}</p>
         <p>{{ airportLongitude }}</p>
       </div>
-    </div>
-    <div class="row">
-      <div class="stacked">
+      <div>
         <elevation-icon :size="iconSize" />
         <p>Elevation (ft):</p>
         <p>{{ airportElevation }}</p>
       </div>
-      <div class="stacked">
+      <div>
         <operational-icon :size="iconSize" />
         <p>Status:</p>
         <p>{{ airportStatus }}</p>
@@ -62,48 +60,31 @@ const iconSize = computed(() => 'max(2.5rem, 5vw)');
 </template>
 
 <style scoped lang="scss">
-$gap: 5vh;
+$gap: 1vh;
 $desktop-min-width: 769px;
 
 .airport-info {
   overflow: auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 3vh 0;
+  text-align: center;
   gap: $gap;
+  margin-bottom: 20px;
 
-  .row {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    gap: $gap;
-
-    @media (min-width: $desktop-min-width) {
-      gap: 0;
-      flex-direction: row;
-    }
-
-    .stacked {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-
-      p:first-child {
-        font-weight: bold;
-      }
-    }
+  @media screen and (min-width: $desktop-min-width) {
+    margin-bottom: 0;
   }
 
-  h1,
-  p {
-    text-align: center;
-    margin: 0;
-    padding: 5px;
+  .grid-container {
+    height: inherit;
+    display: grid;
+    grid-template-columns: 1fr; // 1 column per row for mobile
+    gap: 1rem;
+    align-items: center;
+
+    @media (min-width: $desktop-min-width) { // Desktop breakpoint
+      grid-template-columns: repeat(2, 1fr); // 2 columns per row
+    }
   }
 
   .name {
