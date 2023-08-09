@@ -44,8 +44,9 @@ body.light {
 
   --color-heading: var(--vt-c-text-light-1);
   --color-text: var(--vt-c-text-light-1);
-  --color-text-hover: var(--vt-c-text-light-2);
+  --color-text-hover: var(--vt-c-accent-light);
 
+  --theme-toggle-background: var(--vt-c-black);
   --flight-category-background: rgba(201, 201, 201, 0.7);
   --section-gap: 160px;
 }
@@ -64,8 +65,9 @@ body.dark {
 
   --color-heading: var(--vt-c-text-dark-1);
   --color-text: var(--vt-c-text-dark-2);
-  --color-text-hover: var(--vt-c-text-dark-1);
+  --color-text-hover: var(--vt-c-accent-dark);
 
+  --theme-toggle-background: var(--vt-c-white);
   --flight-category-background: rgba(255, 255, 255, 0.7);
 }
 

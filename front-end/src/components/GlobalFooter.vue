@@ -25,7 +25,7 @@ footer {
   justify-content: space-around;
   align-items: center;
   min-height: var(--footer-height);
-  background-color: var(--color-background-soft);
+  background-color: var(--color-background-mute);
 
   a {
     display: flex;

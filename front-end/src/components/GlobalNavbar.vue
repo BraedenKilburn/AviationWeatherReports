@@ -54,7 +54,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   height: var(--nav-height);
-  background-color: var(--color-background-soft);
+  background-color: var(--color-background-mute);
   padding: 0 10px;
 
   a {

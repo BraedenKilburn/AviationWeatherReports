@@ -26,7 +26,7 @@ const toggleTheme = () => {
 
   &:hover {
     cursor: pointer;
-    fill: var(--color-text-hover);
+    fill: var(--theme-toggle-background);
   }
 }
 </style>
