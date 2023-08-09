@@ -47,8 +47,8 @@ const iconSize = computed(() => 'max(2.5rem, 5vw)');
       </div>
       <div>
         <elevation-icon :size="iconSize" />
-        <p>Elevation (ft):</p>
-        <p>{{ airportElevation }}</p>
+        <p>Elevation:</p>
+        <p>{{ airportElevation }}'</p>
       </div>
       <div>
         <operational-icon :size="iconSize" />
