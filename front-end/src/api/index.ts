@@ -1,8 +1,7 @@
 import axios, { AxiosError } from 'axios';
 
-const api = axios.create({
-  baseURL: 'http://localhost:3000',
-});
+const baseURL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
+const api = axios.create({ baseURL });
 
 /**
  * Fetch info from api
@@ -12,7 +11,7 @@ const api = axios.create({
  */
 export const fetchInfo = async (type: string, airportCode: string) => {
   try {
-    const response = await api.get(`api/${type}/${airportCode}`);
+    const response = await api.get(`${type}/${airportCode}`);
     return response.data;
   } catch (error) {
     const axiosError = error as AxiosError;
