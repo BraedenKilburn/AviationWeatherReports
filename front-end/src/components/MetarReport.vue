@@ -33,11 +33,14 @@ const observedTime = computed(() => {
 const flightCategory = computed(() => metar.value.flight_category);
 
 const wind = computed(() => {
-  const wind = metar.value.wind;
-  if (!wind) return 'No wind data available';
+  const windData = metar.value.wind;
+  const calmWind = metar.value.raw_text.includes('00000KT');
 
-  const direction = wind.degrees;
-  const speed = wind.speed_kts;
+  if (calmWind) return 'Calm';
+  if (!windData) return 'No wind data available';
+
+  const direction = windData.degrees;
+  const speed = windData.speed_kts;
 
   return `${direction}° at ${speed} knots`;
 });
