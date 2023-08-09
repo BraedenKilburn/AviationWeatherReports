@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { type RouteRecordRaw } from 'vue-router'
 import { ref } from 'vue'
+import HeaderSearch from '@/components/HeaderSearch.vue'
 import ThemeToggle from '@/components/ThemeToggle.vue'
 import { MenuHamburger } from '@/components/svg'
 
@@ -38,7 +39,10 @@ const toggleMenu = () => (active.value = !active.value)
         </router-link>
       </li>
     </ul>
-    <theme-toggle class="theme-toggle" />
+    <div class="buttons">
+      <theme-toggle class="theme-toggle" />
+      <header-search />
+    </div>
     <menu-hamburger
       class="menu-toggle"
       size="24"
@@ -90,6 +94,14 @@ nav {
     }
   }
 
+  .buttons {
+    display: flex;
+    align-items: center;
+    * {
+      margin-left: 20px;
+    }
+  }
+
   .menu-toggle {
     display: none;
   }
@@ -98,7 +110,7 @@ nav {
 @media (max-width: 950px) {
   nav {
     .nav-links {
-      width: 50%;
+      width: 40%;
     }
   }
 }
@@ -134,7 +146,8 @@ nav {
       }
     }
 
-    .theme-toggle {
+    .theme-toggle,
+    .search-icon {
       display: none;
     }
 

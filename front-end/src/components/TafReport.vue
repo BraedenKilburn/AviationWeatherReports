@@ -72,7 +72,9 @@ const clouds = (clouds?: API.CloudLevel[]): string[] => {
   if (!clouds) return ['No cloud data available'];
 
   return clouds.map(cloud => {
-    const { code, base_feet_agl } = cloud;
+    const { code, text, base_feet_agl } = cloud;
+
+    if (code === 'SKC') return text ?? 'Clear skies';
     return `${code} at ${base_feet_agl?.toLocaleString()}'`;
   });
 }

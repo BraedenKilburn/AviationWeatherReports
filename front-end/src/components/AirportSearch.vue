@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { fetchAllInfo } from '@/api';
 import { useVuelidate } from '@vuelidate/core'
 import { required, minLength, maxLength, alphaNum } from '@vuelidate/validators'
@@ -27,13 +27,14 @@ const v$ = useVuelidate(rules, { search })
 const router = useRouter();
 const loading = ref(false)
 const errorMessage = ref('')
+const store = useRootStore();
+
 const submit = async () => {
   loading.value = true
 
   try {
     const [airport, metar, taf] = await fetchAllInfo(search.value);
 
-    const store = useRootStore();
     store.icao = search.value.toUpperCase();
     store.airport = airport;
     store.metar = metar;
@@ -56,6 +57,15 @@ const submit = async () => {
     loading.value = false
   }
 }
+
+const noData = computed(() => {
+  if (!store.icao) return false;
+  if (!store.airport && props.name === 'airport') return true;
+  if (!store.metar && props.name === 'metar') return true;
+  if (!store.taf && props.name === 'taf') return true;
+
+  return false;
+})
 </script>
 
 <template>
@@ -99,6 +109,12 @@ const submit = async () => {
       class="error"
     >
       {{ errorMessage }}
+    </div>
+    <div
+      v-if="noData"
+      class="error"
+    >
+      No data found for {{ store.icao }}
     </div>
   </div>
 </template>

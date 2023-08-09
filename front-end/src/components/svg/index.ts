@@ -8,6 +8,7 @@ export { default as MenuHamburger } from './MenuHamburger.vue';
 export { default as OperationalIcon } from './OperationalIcon.vue';
 export { default as PinIcon } from './PinIcon.vue';
 export { default as PressureIcon } from './PressureIcon.vue';
+export { default as SearchIcon } from './SearchIcon.vue';
 export { default as ThemeIcon } from './ThemeIcon.vue';
 export { default as ThermostatIcon } from './ThermostatIcon.vue';
 export { default as VisibilityIcon } from './VisibilityIcon.vue';
