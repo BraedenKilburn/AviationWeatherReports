@@ -31,6 +31,6 @@ onBeforeMount(() => {
 
 <style scoped lang="scss">
 .main {
-  height: calc(100vh - var(--nav-height) - var(--footer-height));
+  min-height: calc(100vh - var(--nav-height) - var(--footer-height));
 }
 </style>

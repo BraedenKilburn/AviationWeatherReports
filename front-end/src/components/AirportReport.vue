@@ -76,7 +76,7 @@ $desktop-min-width: 769px;
   }
 
   .grid-container {
-    height: inherit;
+    min-height: calc(100vh - var(--nav-height) - var(--footer-height) - 100px);
     display: grid;
     grid-template-columns: 1fr; // 1 column per row for mobile
     gap: 1rem;

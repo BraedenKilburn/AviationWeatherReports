@@ -201,6 +201,7 @@ $desktop-min-width: 769px;
 
   @media screen and (min-width: $desktop-min-width) {
     margin-bottom: 0;
+    gap: 0;
   }
 
   .heading-info {
@@ -237,14 +238,15 @@ $desktop-min-width: 769px;
   }
 
   .grid-container {
-    height: inherit;
+    min-height: calc(100vh - var(--nav-height) - var(--footer-height) - 200px);
     display: grid;
     grid-template-columns: 1fr; // 1 column per row for mobile
-    gap: 1rem;
+    gap: 3rem;
     align-items: center;
 
     @media (min-width: $desktop-min-width) { // Tablet breakpoint
       grid-template-columns: repeat(2, 1fr); // 2 columns per row
+      gap: 1rem;
     }
 
     @media (min-width: 1025px) { // Desktop breakpoint
