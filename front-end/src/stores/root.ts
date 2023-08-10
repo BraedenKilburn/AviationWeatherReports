@@ -11,7 +11,11 @@ export const useRootStore = defineStore('root', () => {
   const setTheme = (newTheme: Themes) => {
     theme.value = newTheme
     localStorage.setItem('theme', newTheme)
-    document.body.classList.replace(theme.value === 'dark' ? 'light' : 'dark', theme.value)
+
+    if (document.body.classList.contains('dark') || document.body.classList.contains('light'))
+      document.body.classList.replace(theme.value === 'dark' ? 'light' : 'dark', theme.value)
+    else
+      document.body.classList.add(theme.value)
   }
 
   const icao = ref('');
