@@ -11,7 +11,6 @@ const store = useRootStore();
 const airport = computed(() => store.airport as API.AirportResponse);
 
 const taf = computed(() => store.taf as API.TafResponse);
-const forecasts = computed(() => taf.value.forecast);
 
 const airportName = computed(() => `${taf.value.station.name} (${taf.value.icao})`);
 
@@ -126,8 +125,8 @@ const iconSize = computed(() => 'max(2.5rem, 5vw)');
               Clouds:
             </div>
             <div
-              v-for="(cloud, idx) in clouds(forecast.clouds)"
-              :key="idx"
+              v-for="(cloud, index) in clouds(forecast.clouds)"
+              :key="index"
             >
               {{ cloud }}
             </div>
