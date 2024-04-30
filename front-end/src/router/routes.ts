@@ -1,5 +1,10 @@
 import type { RouteRecordRaw } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
+import type { AsyncComponentLoader } from 'vue'
+
+const airportView: AsyncComponentLoader = () => import(/* webpackChunkName: "airport" */ '@/views/AirportView.vue');
+const metarView: AsyncComponentLoader = () => import(/* webpackChunkName: "metar" */ '@/views/MetarView.vue');
+const tafView: AsyncComponentLoader = () => import(/* webpackChunkName: "taf" */ '@/views/TafView.vue');
 
 const routes: RouteRecordRaw[] = [
   {
@@ -14,7 +19,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/airport',
     name: 'airport',
-    component: () => import(/* webpackChunkName: "airport" */ '@/views/AirportView.vue'),
+    component: airportView,
     meta: {
       title: 'Airport',
       order: 1,
@@ -23,7 +28,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/metar',
     name: 'metar',
-    component: () => import(/* webpackChunkName: "metar" */ '@/views/MetarView.vue'),
+    component: metarView,
     meta: {
       title: 'METAR',
       order: 2,
@@ -32,7 +37,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/taf',
     name: 'taf',
-    component: () => import(/* webpackChunkName: "taf" */ '@/views/TafView.vue'),
+    component: tafView,
     meta: {
       title: 'TAF',
       order: 3,
