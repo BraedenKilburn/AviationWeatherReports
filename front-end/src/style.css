@@ -1,0 +1,7 @@
+@import '~/modern-normalize/modern-normalize.css';
+@import '@fontsource-variable/atkinson-hyperlegible-next';
+@import 'primeicons/primeicons.css';
+
+html {
+  font-family: 'Atkinson Hyperlegible Next Variable', monospace;
+}

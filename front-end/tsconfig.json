@@ -1,14 +1,22 @@
 {
   "files": [],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "~/*": [
+        "./node_modules/*"
+      ]
+    }
+  },
   "references": [
-    {
-      "path": "./tsconfig.node.json"
-    },
     {
       "path": "./tsconfig.app.json"
     },
     {
-      "path": "./tsconfig.vitest.json"
+      "path": "./tsconfig.node.json"
     }
   ]
 }
